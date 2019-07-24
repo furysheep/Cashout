@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ 命令定义的一般规则是:
+ "<>"中代表的是命令名称，函数通过这个节点查找是否与需要的命令一至
+ 1B61代表的是字节命令头，命令头包括十六进制命令和字符串命令，如果命令中没有被双引号包括，就认为是十六进制命令
+ "DIRECTION "被双引号包围，表示用字符串
+ "[]"代表的是命令后面跟随的参数，一个"[]"代表跟一个字节参数
+ "[]"内容代表参数的取值范围，例如:[0,1,2]与[0,2]代表的意义相同
+	组合命令:
+ 有些命令是多个参数组成一个字节，例如RG-MTP58的倍高倍宽指令0x1d 0x21 n n的高4位是表示高度，低四位表示宽度
+ 所以它的命令就是 1D21[4(4),0(4)] 其意义是一个字节包涵俩部分组成，取第一个参数的低4位左移4位，再与第二个参数的低4位左移0位或运算
+ 以瑞工MTP-58B为基础指令集设置，特殊机器指令放到最前
+ 
+ 关于默认值：一般情况下认为是参数取值范围的最小值
+ -->
+
+<!-- 另一种表示 -->
+<!--
+ Contet in "<>" is the command name. Functions check if the command is the same as required through this knot.  1B61 is the byte command head, which includes hexadecimal command and character command. if there is no double quotation marks around a command, the command is a hexadecimal command
+ "DIRECTION" shows characters
+ represents the parameter after the command, and one "[]" represents one byte parameter.
+ "[]" represent the value range of the parameter. For example, [0,1,2] and [0,2] represent the same information
+ 
+ Combination command:
+ -->
+
+<common>
+    <!-- 通用 -->
+    <print name = "general">
+        <!-- 对齐方式 选择字符对齐模式0,2 /48,50  Alignment method shows character alignment method-->
+        <align>1B 61 [0,2]0</align>
+        <!-- 打印并走纸一行 Print and feed one line-->
+        <crlf>0A</crlf>
+        <!-- 打印并回车  Print and Enter-->
+        <cr>0D</cr>
+        <!-- 切纸1D 56 m n（m＝ 65(0x41),66(0x42) 0<=n<=255  选择切纸模式并切纸0,48,1,49  m = 0, 48, 1, 49，打印机直接切纸  Cut the paper 1D 56 m n（m＝ 65(0x41),66(0x42) 0<=n<=255  Select the cutting mode and cut the paper 0,48,1,49  m = 0, 48, 1, 49, Printer cuts the paper directly-->
+        <cutpaper>1D 56 [65,66]65 [0,255]0</cutpaper>
+        <cutfullpaper>1D56[1,49]1</cutfullpaper>
+        <!-- 打印并走到黑标处 Print and feed to the black mark position-->
+        <blackmark>0C</blackmark>
+        <!-- 设置默认行高 Set default line height-->
+        <defspace>1B32</defspace>
+        <!-- 设置字符右间距 Set character right space-->
+        <rightpadding>1B20[0,255]0</rightpadding>
+        <!-- 打印预下载位图 1C 50 n (0<=n<=7)  Print pre saved bitmap-->
+        <printflsbitmap>1C50[0,7]0</printflsbitmap>
+        <!-- 初始化打印机 Initialize the printer-->
+        <init_printer>1B 40</init_printer>
+        <pic_start>1D 44 01</pic_start>
+        <pic_end>1D 44 00</pic_end>
+        <!-- 打印并走纸n行 1B 4A n(0<=n<=255) Initialize the printer-->
+        <printandfeed>1B 4A [0,255]30</printandfeed>
+        <!-- 打印并向前走纸n行 Print and move forward n line-->
+        <feedlines>1B64[0,255]30</feedlines>
+        <!-- 进入页模式1B 4C  Enter into page mode-->
+        <strleft>1B4C[0,255]0[0,255]5</strleft>
+        <!-- 选择/取消黑白反显打印模式 1D 42 n(0<=n<=255) Select/cancel black/white opposite printing mode-->
+        <opposite>1D 42 [0,1]0</opposite>
+        <!-- 设置行间距为n点行 1B 33 n(0<=n<=255) Set line space as n dot line-->
+        <linespace>1B 2B [0,255]0</linespace>
+        <!-- 选择打印模式 1B 21 n(0<=n<=255)  Select printing mode-->
+        <strformat>1B 21 [0,255]0</strformat>
+        <!-- 选择打印模式 1c 21 n(0<=n<=255) Select printing mode-->
+        <chineseformat>1C 21 [0,255]0</chineseformat>
+        <!-- 选择/取消双重打印模式 1B 47 n(0<=n<=255) Select/cancel double printing mode-->
+        <dupprint>1B 47 [0,255]0</dupprint>
+        <!-- 打印条形码 Print Barcode-->
+        <!-- <barcode>1D 48 [0,255] 1D 68 [0,255] 1D 77 [0,255] 1D 6B [0,255]</barcode>-->
+        <barcodeHRI>1D 48 [0,2]0</barcodeHRI>
+        <barcodeHeight>1D 68 [1,255]36</barcodeHeight>
+        <barcodeWidth>1D 77 [2,6]2</barcodeWidth>
+        <barcode>1D 6B</barcode>
+        <!-- 传送纸传感器状态 1B 76 Paper feeding sensor status-->
+        <paper_status>1B76</paper_status>
+        <!-- 表格 Table-->
+        <label>1C</label>
+        <!-- 校验 Check -->
+        <verify>1F0C1D2F3E</verify>
+        <!-- 打印二维码 Print 2D barcode-->
+        <!-- <barcode_2d>1D 77 [0,255] 1D 6B [0,255] [0,255] [0,255]</barcode_2d>-->
+        <barcode_2dWidth>1D 77 [2,6]2</barcode_2dWidth>
+        <barcode_2dHeight>1D 6B</barcode_2dHeight>
+        <!-- 88V打印二维码 <barcode_2d>1D5A001B5A[1,30][0,8][1,6][0,255][0,255] 88V Print 2D barcode-->
+        <barcode_2d_type_88V>1D 5A [0,2]2</barcode_2d_type_88V>
+        <barcode_2d_88V>1B 5A</barcode_2d_88V>
+        <!-- 打印位图 16 n d1..dn 15 n Print bitmap-->
+        <bitmap>16[0,255]0 15[0,255]0</bitmap>
+        <!-- 设置左边距 1D 4C nL(0<=nL<=255) nH(0<=nH<=255)  [( nL + nH ×256) ×0.125mm)] Set left margin-->
+        <left_margin>1D 4C [0,255]0</left_margin>
+        <!-- 设置打印宽度 1D 57 nL(0<=nL<=255) nH(0<=nH<=255)  [( nL + nH ×256) ×0.125mm)] Set printing density-->
+        <print_width>1D 57 [0,576]576</print_width>
+        <!-- 实时状态传输 10 04 n(1<=n<=4) Real time status sending-->
+        <status>10 04 04</status>
+        <!-- 返回正常值 -->
+        <query_ret>12</query_ret>
+        <!-- 选择打印模式  宽度高度组合参数，上面有写意义 Select combination parameter of printing width and height-->
+        <text>1B21[7(1),5(1),4(1),3(1),0(1)]1C21[7(1),3(1),2(1),0(1)]</text>
+        <!-- 选择/取消用户自定义字符 Set/Cancel user defined characters-->
+        <usercharselect>1B25[0,255]</usercharselect>
+        <!-- 定义用户自定义字符 Define user characters-->
+        <userchardef>1B26[0,255][32,126][32,126]</userchardef>
+        <!-- 取消用户自定义字符 Cancel user defined characters-->
+        <usercharcancel>1B3F[32,127]</usercharcancel>
+        <!-- 定义用户自定义汉字[FEH][A1H,FEH] Define user Chinese-->
+        <userchinesedef>1C32</userchinesedef>
+        <!-- 选择/取消加粗模式 Select/Cancle bold mode-->
+        <bold>1B45[0,255]0</bold>
+        <!-- 选择字体0,1,48,49 Selet font-->
+        <font>1B4D[0,1]0</font>
+        <!-- 选择/取消顺时针旋转90° Select/cancel clockwise rotation 90° -->
+        <rotation>1B 56 [0,2]0</rotation>
+        <!-- 选择字符代码页 Select codepage-->
+        <codepage>1B74[0,255]</codepage>
+        <!-- 选择字符大小 Select font size-->
+        <charsize>1D 21[0,255]</charsize>
+        <!-- 允许/禁止按键 Allow/forbid button-->
+        <keypad>1B6335[0,255]</keypad>
+        <!-- 选择纸传感器输出缺纸信号 Select paper feeder sensor sending paper end signal-->
+        <paperstatus>1B6333[0,255]</paperstatus>
+        <!-- 选择停止打印的纸传感器  Select paper sensor of stopping printing-->
+        <stoppaper>1B6334[0,255]</stoppaper>
+        <!-- 横向跳格 Tab horizontaly-->
+        <tab>09</tab>
+        <!-- 设置绝对打印位置 Set absolute printing position-->
+        <absoluteposition>1B 24 [0,255]0 [0,255]0</absoluteposition>
+        <!-- 设置横向跳格位置1B 44 n1...nk 00 Set horizontal tab position-->
+        <tabposition>1B 44</tabposition>
+        <!--设置相对横向打印位置 Set relative horizontal printing position-->
+        <horizontalprint>1B 5C [0,255]0 [0,255]0</horizontalprint>
+        <!--设置左边距 set left margin-->
+        <leftmargin>1D4C[0,255][0,255]</leftmargin>
+        <!--设置打印区域宽度 默认576：80×72 512：80×64 384：58 set default printing area width-->
+        <printwidth>1D57[0,255][0,255]</printwidth>
+        <!--选择位图模式0,1,32,33 Seletc bitmap mode-->
+        <!-- <bitmapdot>1B 2A [32,39]32 [0,255]0 [0,18]0</bitmapdot>-->
+        <bitmapdot>1B 2A [0,39]32 [0,255]0 [0,18]0</bitmapdot>
+        <!--定义下载位图 Define downloaded bitmap-->
+        <bitmapdownload>1D2A[1,255][1,48]</bitmapdownload>
+        <!--打印下载位图0,3/48,51 Print downloaded bitmap-->
+        <printdownbitmap>1D2F[0,3]</printdownbitmap>
+        <!--打印光栅位图0,3/48,51 Print grating bitmap-->
+        <!--<printraster>1D 76 30 [0,3][0,255][0,255][0,255][0,255]</printraster>-->
+        <printraster>1D 76 30 [0,3]0</printraster>
+        <!-- 实时状态查询正确返回值 Return OK value of real time status check-->
+        <!-- <statusreply>12</statusreply> -->
+        <!--设定自动状态返回(ASB) Define ASB-->
+        <asb_status>1D61[0,255]</asb_status>
+        <!--传送状态1,2,49,50该指令对并口无效 Sending status command, 1,2,49, 50, this command is invalid to parallel interface-->
+        <send_status>1D72[1,50]</send_status>
+        <!--传送纸传感器状态ESC/POS指令集中的陈旧指令。Paper feeder sensor status, old commands in ESC/POS commands system-->
+        <paper_status>1B76</paper_status>
+        <!--开始 / 结束宏定义 Start/end Macro definition-->
+        <macros>1D3A</macros>
+        <!--执行宏指令 Excute Macro command-->
+        <exemacros>1D5E[0,255][0,255][0,1]</exemacros>
+        <!--发送实时请求到打印机 Send real time require to the printer-->
+        <sendrequest>1005[1,2]</sendrequest>
+        <!--选择外部设备 Select external device-->
+        <choosedevices>1B3D[0,255]</choosedevices>
+        <!--产生钱箱控制脉冲 Generate cash drawer pulse 指令第一个参数的分别是0or48或者1or49，根据插座引脚来区别-->
+        <cashdrawer>1B 70 [0,49]0 [0,255]0 [0,255]0</cashdrawer>
+        <!--查询打印机ID号1,3 49,51 65,69 Check printer ID-->
+        <query_priterID>1D49[1,69]</query_priterID>
+        <!--设置横向和纵向移动单位 Set move unit in horizontal and vertical-->
+        <moveposition>1D50[0,255][0,255]</moveposition>
+        <!--执行测试打印( pL+ pH × 256)=2  (pL=2, pH=0) Excute test printing-->
+        <printtest>1D2841[2][0][0,2][1,3]</printtest>
+        <!--允许/禁止实时指令3 ≤ (pL + pH × 256) ≤ 65535  1D 28 44 pL pH m [a1 b1] … [ak bk] Allow/Forbid real time commands-->
+        <realtime>1D2844[0,255][0,255][20]</realtime>
+        <!--设置ID处理响应(pL + pH × 256) = 6 (pL =6, pH = 0) 32 ≤ d ≤ 126  1D 28	 48 pL pH fn m d1 d2 d3	d4 Set ID response-->
+        <id_respond>1D2848[6][0][48][48]</id_respond>
+        <!--初始化维护计数器10,21,50,70 Initialize counter-->
+        <init_timer>1D6730[0][20,70][0]</init_timer>
+        <!--设置汉字字符模式 Select Chinese mode-->
+        <chcharmode>1C21[0,255]</chcharmode>
+        <!--选择汉字模式 Select Chinese mode-->
+        <choosechchar>1C26</choosechchar>
+        <!--选择 / 取消汉字下划线模式0,2/48,50 Select/cancel Chinese underline mode-->
+        <chchars_underline>1C2D[0,2]</chchars_underline>
+        <!--取消汉字模式式 Cancel Chinese mode-->
+        <esc_chchar>1C2E</esc_chchar>
+        <!--选择汉字代码系统n=0, 1/48, 49 Select Chinese codepage system-->
+        <chcode>1C43[0,1]</chcode>
+        <!--设置汉字字符左右间距 Select Chinese character left and right space-->
+        <chchar_spac>1C53[0,255][0,255]</chchar_spac>
+        <!--选择 / 取消汉字倍高倍宽 Select/cancel Chinese double width/height-->
+        <chchar_width>1C57[0,255]</chchar_width>
+        <!--选择HRI字符的打印位置0,3/48,51 Select HRI characters printing position-->
+        <HRI_position>1D48[0,3]</HRI_position>
+        <!--选择HRI使用字体0,1/48,49 Select HRI characters font-->
+        <HRI_font>1D66[0,1]</HRI_font>
+        <!-- 打印一维条形码 【HRI】 【高度】 【宽度】 【条码类型】【数据长度】Print 1D barcode 【HRI】【Height】【Width】【barcode type】【data length】-->
+        <barcode_1dprint>1D48[0,2]1D68[0,40]1D77[1,4]1D6B[65,73][0,255]</barcode_1dprint>
+        <!-- 打印二维码【条码类型】【条码数据】 Print 2D barcode【Barcode type】【barcode data】-->
+       	<barcode_2dPDF417>1D5A001B5A[1,30][0,8][1,6][0,255][0,255]</barcode_2dPDF417>
+       	<barcode_2dMATRIX>1D5A011B5A[0,144][8,144][1,6][0,255][0,255]</barcode_2dMATRIX>
+       	<barcode_2dQRCODE>1D5A021B5A[0,40][76,77,81,72][1,6][0,255][0,255]</barcode_2dQRCODE>
+    </print>
+    <print name = "RG_MPT_III">
+        <!-- <querystatus>10 04 04</querystatus> -->
+        <!-- <query_ret>00</query_ret> -->
+    </print>
+    <print name = "RG_MDP58B">
+        <!-- <query_ret>00</query_ret> -->
+        <!-- 选择字符集1  ESC 6; 1B 36 -->
+        <!-- <SelectCharSetOne>1B 36</SelectCharSetOne> -->
+        <!-- <SelectCharSetTwo>1B 37</SelectCharSetTwo> -->
+        <!-- <PrintCurve>1B 27 [0,255]0 [0,255]0 [0,255]0 [0,255]0 [0,255]0 [0,255]0 [0,255]0 0D</PrintCurve> -->
+        <!-- <PrintContinuousCurve>1B 27 [0,255]0 [0,255]0 [0,255]0 [0,255]0 [0,255]0 [0,255]0 [0,255]0 0D</PrintContinuousCurve> -->
+    </print>
+    <print name="RG_LP58A">
+        <labelstartascii>1B 53</labelstartascii>
+        <!-- <labelstartpage>1B 4C</labelstartpage> -->
+        <!-- <labelstartpagespace>1B 57 [0,255]0 [0,255]0 [0,255]0 [0,255]0 [0,255]0 [0,255]0 [0,255]0 [0,255]0</labelstartpagespace> -->
+        <!-- <labelend>0C 18</labelend> -->
+    </print>
+    <print name="RG_P88V">
+        <!-- 实时状态传输 10 04 n(1<=n<=4) Real time status sending-->
+        <status>02</status>
+        <cutpaper>1D 56 [65,66]66 [0,255]1</cutpaper>
+        <cuthalfpaper>1D 56 [1,49]1</cuthalfpaper>
+        <!-- 打印NV位图 Print NV bitmap-->
+        <!-- <printflsbitmap>1C70[1,5]</printflsbitmap> -->
+        <!-- <labelend>0C18</labelend> -->
+       	<!-- <barcode_2dQRCODE>1D 5A 01 1B 5A [0,40]0 [0,40]0 [1,8]0 [0,255]0 [0,255]0</barcode_2dQRCODE> -->
+    </print>
+    <print name = "RG_P80A">
+        <!-- <query_ret>00</query_ret> -->
+    </print>
+    <print name="RG_GK888">
+        <!-- 发送数据到缓存区，x轴，y轴，旋转，字体，x乘数倍宽，y倍高，反白（N/R），数据  %d,%d,%d,-->
+        <!-- <z_text>A%@,%@,%@,%@,%@,%@,%@,"%@"</z_text> -->
+        <!-- 打印一维条码 条码x,y,旋转, 条码窄度，条码宽度，条码高度， 可显示B/N，条码内容-->
+        <!-- <barcode_1dprint>B%@,%@,%@,%@,%@,%@,%@,%@,"%@"</barcode_1dprint> -->
+        <!-- 二维码 条码x,y，最大宽度，最大高度，条码内容p4~p9可省略-->
+       	<!-- <barcode_2dPDF417>b%@,%@,P,"%@"</barcode_2dPDF417> -->
+        <!-- <barcode_2dPDF417>b%@,%@,P,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,"%@"</barcode_2dPDF417> -->
+        <!-- 二维码DATAMATRIX x轴，y轴，条码尺寸正常，条码字符 -->
+       	<!-- <barcode_2dMATRIX>b%@,%@,D,"%@"</barcode_2dMATRIX> -->
+        <!-- 二维码PDF417 x轴，y轴，ECC等级，大小，自动生成，旋转默认正常，版本默认，掩码默认，条码字符 -->
+       	<!-- <barcode_2dQRCODE>b%@,%@,Q,%@,"%@"</barcode_2dQRCODE> -->
+        <!-- <print_graphic>GW%@,%@,%@,%@,%@</print_graphic> -->
+       	<!--初始化打印机-->
+        <init_printer>N</init_printer>
+        <!--  <end_printer>P1</end_printer> -->
+        <!--  <enter_printer>0D 0A</enter_printer> -->
+        <!-- 划线 x,y,x点数，y点数-->
+        <!-- <draw_line>"LE%@,%@,%@,%@\r"</draw_line> -->
+        <!-- 打印区域大小-->
+        <!-- <print_area>Q%@,%@</print_area> -->
+        <!-- 打印方向-->
+        <!-- <print_position>ZT</print_position> -->
+    </print>
+    <print name="RG_LW888">
+        <!-- <labelstartpage>"SIZE %dmm,%dmm\rGAP 2mm,0mm\r"</labelstartpage> -->
+        <!-- <labelend>"PRINT 1,1\r"</labelend> -->
+        <!-- 检测打印标签直接的缝隙 Check the gap between labels-->
+        <!-- <gap>"GAP %dmm,0mm\r"</gap> -->
+        <!-- <density>"DENSITY %d\r"[1,15]</density> -->
+        <!-- <speed>"SPEED %d\r"[1,14]</speed> -->
+        <!-- 在发送打印数据之前设置打印方向、起始位置、清除之前的打印缓存 Set printing direction, start position and clear the buffer before sending printing data -->
+        <!-- <direction>"DIRECTION %d\rREFERENCE 0,0\rCLS\r"[0,1]</direction> -->
+        <!-- <text>"TEXT %d,%d,"3",0,%d,%d,"%s"\r"</text> -->
+        <!-- 打印一维条码 条码x,y, 条码字符串，条码高度， 其它默认 Print 1D barcode x,y, barcode text and barcode height. Others are default -->
+        <!-- <barcode_1dprint>"BARCODE %d,%d,"128",%d,2,0,%d,%d,"%s"\r"</barcode_1dprint> -->
+        <!-- 二维码PDF417 x轴，y轴，宽度，高度，旋转默认正常，条码字符  2D barcode PDF417 x axis, y axis, width, height, rotation default normal, barcode text -->
+       	<!-- <barcode_2dPDF417>"PDF417 %d,%d,%d,%d,0,"%s"\r"</barcode_2dPDF417> -->
+        <!-- 二维码DATAMATRIX x轴，y轴，条码尺寸正常，条码字符 2D barcode DATAMTRIX x axis, y axis, barcode size normal, barcode text -->
+       	<!-- <barcode_2dMATRIX>"MAXICODE %d,%d,5,"%s"\r"</barcode_2dMATRIX> -->
+        <!-- 二维码PDF417 x轴，y轴，ECC等级，大小，自动生成，旋转默认正常，版本默认，掩码默认，条码字符 2D barcode PDF417 x axis, y axis, ECC class, dimension, auto generation, rotation default normal, version default, mask default, barcode text -->
+       	<!-- <barcode_2dQRCODE>"QRCODE %d,%d,M,%d,A,0,M1,S3,"%d"\r"</barcode_2dQRCODE> -->
+    </print>
+    <print name = "RG_k532">
+        <!-- <querystatus>10 04 04</querystatus> -->
+        <!-- <query_ret>00</query_ret> -->
+    </print>
+    <print name = "RG_k628">
+        <!-- <querystatus>10 04 04</querystatus> -->
+        <!-- <query_ret>00</query_ret> -->
+    </print>
+    <print name = "RG_SP6000">
+        <!-- <querystatus>10 04 04</querystatus> -->
+        <!-- <query_ret>00</query_ret> -->
+    </print>
+    <print name = "RG_SD2480">
+        <!-- <querystatus>10 04 04</querystatus> -->
+        <!-- <query_ret>00</query_ret> -->
+    </print>
+    <print name = "RG_DS1920">
+        <result>1D 80 01</result>
+        <!-- 进入读取状态模式 -->
+        <enterReadState>1D 1A 1B 1C 1D 4D 4F 44 45 00</enterReadState>
+        <!-- 退出读取模式 -->
+        <exitReadState>1D 1A 1B 1C 1D 4D 4F 44 45 02</exitReadState>
+        <!-- 读取打印机序列号 -->
+        <readNumber>1D 84 01</readNumber>
+        <!-- 获取打印机状态 -->
+        <readStatus>1D 84 02</readStatus>
+        <!-- 色带灰度检测 -->
+        <ribbondetecte>1D 84 03</ribbondetecte>
+        <!-- 断针检测 -->
+        <breakage>1D 84 04</breakage>
+        <!-- 设置断针补偿 -->
+        <needlemake>1D 84 06</needlemake>
+        <!-- <query_ret>00</query_ret> -->
+    </print>
+    <print name = "RG_brother">
+        <!-- <querystatus>10 04 04</querystatus> -->
+        <!-- <query_ret>00</query_ret> -->
+    </print>
+    <print name = "RG_TSC">
+        <!-- <querystatus>10 04 04</querystatus> -->
+        <!-- <query_ret>00</query_ret> -->
+    </print>
+    <print name="RG_MTP80B">
+        <!--  选择取消下划线模式  -->
+        <!-- <underlines>1B 2D [0,2]0</underlines> -->
+        <!-- <print_area>SIZE %@mm,%@mm</print_area> -->
+        <!-- <labelend>0C18</labelend> -->
+        <!-- 检测打印标签直接的缝隙 -->
+        <!-- <gap>GAP %@ mm,%@ mm</gap> -->
+        <!-- 打印浓度 [0,15] -->
+        <!-- <density>DENSITY %@</density> -->
+        <!-- 打印速度 [1,14] -->
+        <!-- <speed>SPEED %@</speed> -->
+        <!-- 在发送打印数据之前设置打印方向、起始位置、清除之前的打印缓存 <direction>"DIRECTION %d,%d\rREFERENCE 0,0\rCLS\r"[0,1][0,1]</direction> -->
+        <!-- <direction>DIRECTION %d\rREFERENCE 0,0\rCLS\r[0,1]</direction> -->
+        <!-- x,y,"font"ROMAN.TTF,rotation,x-mu,y-mu,"content"-->
+        <!-- <z_text>TEXT %@,%@,"%@",%@,%@,%@,"%@"</z_text> -->
+        <!-- 打印一维条码 条码BARCODE X, Y,“codetype”, height, human readable[0,1], rotation[0,90,180,270], narrow,wide,“code”.-->
+        <!-- <barcode_1dprint>BARCODE %@,%@,"%@",%@,%@,%@,%@,%@,"%@"</barcode_1dprint> -->
+       	<!-- 划线 x,y,x点数，y点数 -->
+        <!-- <draw_line>"BAR %s,%s,%s,%s\r"</draw_line> -->
+        <!--  BOX X_start, Y_start, X_end, Y_end, linethickness -->
+        <!-- <draw_rectang>"BOX %s,%s,%s,%s,%s\r"</draw_rectang> -->
+        <!-- 还没用 选择 / 取消黑白反显打印模式1D42[0,255] "REVERSE %s,%s,%s,%s\r" -->
+        <!-- <opposite>REVERSE 0,0,%@,%@ </opposite> -->
+        <!-- <lan>"CODEPAGE %s\r"[437,850,852,860,863,865,857,1250,1252,1253,1254]</lan> -->
+        <!-- BITMAP X, Y, width, height, mode, bitmap data… -->
+        <!-- <bitmap>"BITMAP %s,%s,%s,%s,%s,%s\r" </bitmap> -->
+        <!-- 初始化打印机-->
+        <!-- <init_printer>CLS</init_printer> -->
+        <!-- <enter_printer>0D 0A</enter_printer> -->
+        <!-- <end_printer>PRINT 1,1</end_printer> -->
+    </print>
+    <print name="RG_P58A">
+        <!-- 选择打印模式  宽度高度组合参数，上面有写意义下划线，倍宽1B55[1(1)]，倍高，加粗 ，小字体 -->
+        <!-- <text>1B 2D [0,1] 1B 55 [1,8] 1B 56 [1,8]</text> -->
+        <!-- <underline>1B 2D [0,1]0</underline> -->
+        <!-- <doubleWidth>1B 55 [1,8]1</doubleWidth> -->
+        <!-- <doubleHeight>1B 56 [1,8]1</doubleHeight> -->
+        <!-- 选择 / 取消黑白反显打印模式 -->
+        <opposite>1B 69 [0,1]0</opposite>
+        <!-- 打印一维条形码 【HRI】 【高度】 【宽度】 【条码类型】【数据长度】-->
+        <!-- <barcode_1dprint>1D48[0,3]1D68[0,255]1D77[2,6]1D6B[65,73][0,255]</barcode_1dprint> -->
+        <barcodeHRI>1D 48 [0,3]0</barcodeHRI>
+        <barcodeHeight>1D 68 [0,255]0</barcodeHeight>
+        <barcodeWidth>1D 77 [2,6]2</barcodeWidth>
+        <barcode>1D 6B</barcode>
+        <!-- 设置字符右间距 -->
+        <print_width>1B 51 [0,255]0</print_width>
+        <!-- 设置行间距为n点行 1B 31 n(0<=n<=255) -->
+        <linespace>1B 31 [0,255]0</linespace>
+        <!-- 设置左边距 -->
+        <left_margin>1B 6C [0,255]0</left_margin>
+    </print>
+    <print name="RG_MLP80A">
+        <mlp_receive>! %@ %@ %@ %@ %@</mlp_receive>
+        
+        <mlp_pagewidth>PAGE-WIDTH %@</mlp_pagewidth>
+        
+        <mlp_text>TEXT %@ %@ %@ %@ %@</mlp_text>
+        
+        <mlp_1d>B %@ %@ %@ %@ %@ %@ %@</mlp_1d>
+        <!-- BARCODE-TEXT  字体  大小  偏移-->
+        <mlp_1d_text>BARCODE-TEXT %@ %@ %@</mlp_1d_text>
+        
+        <mlp_1d_off>BARCODE-TEXT OFF</mlp_1d_off>
+       	
+        <mlp_line>LINE %@ %@ %@ %@ %@</mlp_line>
+        
+        <mlp_box>BOX %@ %@ %@ %@ %@</mlp_box>
+        
+        <mlp_location>FORM</mlp_location>
+        
+        <mlp_endprint>PRINT</mlp_endprint>
+        
+        <mlp_2d>BARCODE %@ %@ %@ M %@ U %@</mlp_2d>
+        
+        <mlp_2data>%@</mlp_2data>
+        
+        <mlp_data>MA,%@</mlp_data>
+        
+        <mlp_endqr>ENDQR</mlp_endqr>
+        
+        <mlp_gap>GAP-SENSE</mlp_gap>
+        <!-- EG 图形指令，指令分别是宽（单位：横向字节数）高（纵向点数）x轴（位置点数）y轴（位置点数） 数据（字符串格式）-->
+        <mlp_graphice_eg>EG %@ %@ %@ %@ %@</mlp_graphice_eg>
+        <!-- +++++++++++ -->
+        <mlp_blod>SETBOLD %@</mlp_blod>
+        
+        <mlp_lt>INVERSE-TEXT %@</mlp_lt>
+        
+        <mlp_gaplt>INVERSE-LINE %@ %@ %@ %@ %@</mlp_gaplt>
+        
+        <mlp_ut>UNDERLINE-TEXT %@</mlp_ut>
+        
+        <mlp_space>SETSP %@</mlp_space>
+        
+        <mlp_center>CENTER</mlp_center>
+        
+        <mlp_left>LEFT</mlp_left>
+        
+        <mlp_right>RIGHT</mlp_right>
+        
+        <mlp_prefeed>PREFEED %@</mlp_prefeed>
+        
+        <mlp_postfeed>POSTFEED %@</mlp_postfeed>
+    </print>
+    <print name="STAR_MPOP">
+        <!-- 设置倍宽 倍高 -->
+        <mpop_doubleWH>1B 69 [0,5]0 [0,5]0</mpop_doubleWH>
+        <!-- 开钱箱 -->
+        <mpop_openCash>07</mpop_openCash>
+        <!-- 设置对齐方式 -->
+        <mpop_align>1B 1D 61 [0,2]0</mpop_align>
+        <!-- 设置切纸 -->
+        <mpop_cutter>1B 64 [0,3]0</mpop_cutter>
+        <!-- 设置条码 -->
+        <mpop_barcode>1B 62</mpop_barcode>
+        
+        <!-- 图形打印 -->
+    </print>
+    <print name="STAR_TSP650II">
+       <!-- 图形打印 -->
+    </print>
+</common>
+
+
+
+
+
+
+
+
+
+
+

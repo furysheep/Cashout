@@ -51,6 +51,7 @@
 		B2824BA522E759E7006C91EB /* libPrintSDK_iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2824BA322E759E7006C91EB /* libPrintSDK_iOS.a */; };
 		B2F1590B22E8967C0024459C /* DropDownListView.m in Sources */ = {isa = PBXBuildFile; fileRef = B2F1590822E8967B0024459C /* DropDownListView.m */; };
 		B2F1590F22E897FC0024459C /* RegoPrinterSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F1590E22E897FC0024459C /* RegoPrinterSelectViewController.swift */; };
+		B2F1591122E8CA020024459C /* common.xml in Resources */ = {isa = PBXBuildFile; fileRef = B2F1591022E8CA020024459C /* common.xml */; };
 		B60770FC4FC8D467C039F0DB /* Pods_Cashout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F1388E9B02CD36190C5400 /* Pods_Cashout.framework */; };
 /* End PBXBuildFile section */
 
@@ -113,6 +114,7 @@
 		B2F1590A22E8967B0024459C /* DropDownChooseProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropDownChooseProtocol.h; sourceTree = "<group>"; };
 		B2F1590C22E897200024459C /* Cashout-Briding-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Cashout-Briding-Header.h"; sourceTree = "<group>"; };
 		B2F1590E22E897FC0024459C /* RegoPrinterSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegoPrinterSelectViewController.swift; sourceTree = "<group>"; };
+		B2F1591022E8CA020024459C /* common.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = common.xml; sourceTree = "<group>"; };
 		D0447120112969A6840DD91E /* Pods-Cashout.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cashout.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Cashout/Pods-Cashout.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -311,6 +313,7 @@
 				B2824BA222E759E7006C91EB /* regoPrinter.h */,
 				B2824BA322E759E7006C91EB /* libPrintSDK_iOS.a */,
 				B2824BA422E759E7006C91EB /* preDefiniation.h */,
+				B2F1591022E8CA020024459C /* common.xml */,
 			);
 			path = RegoSDK;
 			sourceTree = "<group>";
@@ -396,6 +399,7 @@
 			files = (
 				328DCC54224C05C1008C8A99 /* Home_iPad.storyboard in Resources */,
 				32C149FF221333E60074CA9F /* LaunchScreen.storyboard in Resources */,
+				B2F1591122E8CA020024459C /* common.xml in Resources */,
 				32C149FC221333E60074CA9F /* Assets.xcassets in Resources */,
 				323D343A224FC5FF00B21C2D /* Localizable.strings in Resources */,
 				32C149F7221333E40074CA9F /* Login.storyboard in Resources */,

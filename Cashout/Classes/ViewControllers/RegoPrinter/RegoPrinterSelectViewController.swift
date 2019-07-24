@@ -13,7 +13,6 @@ class RegoPrinterSelectViewController: UIViewController, UITableViewDelegate, UI
     var nameArr = [String]()
     var modelsDropDownView: DropDownListView!
     var per: String? = nil
-    @IBOutlet weak var modelsDropdownContainer: UIView!
     @IBOutlet weak var segment: UISegmentedControl!
     @IBOutlet weak var viewWIFI: UIView!
     @IBOutlet weak var viewBT: UIView!
@@ -24,7 +23,7 @@ class RegoPrinterSelectViewController: UIViewController, UITableViewDelegate, UI
     @IBOutlet weak var tableViewBT: UITableView!
     @IBOutlet weak var IPConnect: UIButton!
     var cell: UITableViewCell!
-    var m_PrinterDataMulArray: NSMutableArray!
+    var m_PrinterDataMulArray = NSMutableArray()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,13 +31,19 @@ class RegoPrinterSelectViewController: UIViewController, UITableViewDelegate, UI
         nameArr = mPrinter.con_GetSupportPrinters() as! [String]
         nameArr[0] = "RG_MTP_58B"
         
-        modelsDropDownView = DropDownListView(frame: .zero, dataSource: self, delegate: self)
-        modelsDropDownView.mSuperView = modelsDropdownContainer
-        modelsDropdownContainer.addSubview(modelsDropDownView)
+        modelsDropDownView = DropDownListView(frame: CGRect(x: 128, y: 120, width: view.frame.size.width - 158, height: 40), dataSource: self, delegate: self)
+        modelsDropDownView.mSuperView = view
+        view.addSubview(modelsDropDownView)
         
         let userDefaults = UserDefaults.standard
         IPAddr.text = userDefaults.string(forKey: "ip")
         IPPort.text = userDefaults.string(forKey: "port")
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        modelsDropDownView.setNeedsLayout()
     }
     
     @IBAction func onSegmentControl(_ sender: Any) {
@@ -77,18 +82,18 @@ class RegoPrinterSelectViewController: UIViewController, UITableViewDelegate, UI
     }
     
     // MARK: - Bluetooth search callback
-    func PrintersMulArrayFount(_ peripheralsMulArray: NSMutableArray) {
+    @objc func PrintersMulArrayFount(_ peripheralsMulArray: NSMutableArray) {
     //    NSLog(@"获取蓝牙代理函数设备");
     //    NSLog(@"peripheralsMulArray +++++++++++++  %@",peripheralsMulArray);
         m_PrinterDataMulArray = peripheralsMulArray
         tableViewBT.reloadData()
     }
     
-    func PrinterFound(_ peripheral: String) {
+    @objc func PrinterFound(_ peripheral: String) {
         per = peripheral
     }
     
-    func PrinterStatus(_ iCode: Int) {
+    @objc func PrinterStatus(_ iCode: Int) {
         var mess = ""
         
         if (iCode == 1) {
@@ -102,14 +107,14 @@ class RegoPrinterSelectViewController: UIViewController, UITableViewDelegate, UI
         present(alert, animated: true)
     }
     
-    func PrinterConnected() {
+    @objc func PrinterConnected() {
         scanButton.setTitle("Disconnect", for: .normal)
         
         let str = UserDefaults.standard.string(forKey: "value")
         let segment_selected = segment.selectedSegmentIndex
     }
     
-    func PrinterClosed() {
+    @objc func PrinterClosed() {
         scanButton.setTitle("Scan", for: .normal)
     }
     
@@ -129,12 +134,12 @@ class RegoPrinterSelectViewController: UIViewController, UITableViewDelegate, UI
         cell.selectionStyle = .none
         
         let deviceItem = m_PrinterDataMulArray[indexPath.row] as! NSDictionary
-        let deviceName = deviceItem.object(forKey: "peripheralNameInfo") as! String
-        let deviceRSSI = deviceItem.object(forKey: "RSSIInfo") as! String
-        let deviceMAC = deviceItem.object(forKey: "peripheralMAC") as! String
+        let deviceName = deviceItem.object(forKey: "peripheralNameInfo") as? String
+        let deviceRSSI = deviceItem.object(forKey: "RSSIInfo") as? Int64
+        let deviceMAC = deviceItem.object(forKey: "peripheralMAC") as? String
         
         cell.textLabel?.text = deviceName
-        let detailString = String(format: "RSSI:%@(%@)", deviceRSSI, deviceMAC)
+        let detailString = String(format: "RSSI:%d(%@)", deviceRSSI ?? 0, deviceMAC ?? "")
         cell.detailTextLabel?.text = detailString
         return cell
     }
