@@ -1,0 +1,159 @@
+
+/* Class = "UISegmentedControl"; 012-7N-wFU.segmentTitles[0] = "ITEMS"; ObjectID = "012-7N-wFU"; */
+"012-7N-wFU.segmentTitles[0]" = "VOCI";
+
+/* Class = "UISegmentedControl"; 012-7N-wFU.segmentTitles[1] = "TRANSACTIONS"; ObjectID = "012-7N-wFU"; */
+"012-7N-wFU.segmentTitles[1]" = "TRANSAZIONI";
+
+/* Class = "UISegmentedControl"; 012-7N-wFU.segmentTitles[2] = "MANAGE"; ObjectID = "012-7N-wFU"; */
+"012-7N-wFU.segmentTitles[2]" = "GESTIONE";
+
+/* Class = "UISegmentedControl"; 4jk-yH-7N6.segmentTitles[0] = "OPEN"; ObjectID = "4jk-yH-7N6"; */
+"4jk-yH-7N6.segmentTitles[0]" = "APERTE";
+
+/* Class = "UISegmentedControl"; 4jk-yH-7N6.segmentTitles[1] = "COMPLETE"; ObjectID = "4jk-yH-7N6"; */
+"4jk-yH-7N6.segmentTitles[1]" = "COMPLETATE";
+
+/* Class = "UISegmentedControl"; 4jk-yH-7N6.segmentTitles[2] = "CANCELED"; ObjectID = "4jk-yH-7N6"; */
+"4jk-yH-7N6.segmentTitles[2]" = "ANNULLATE";
+
+/* Class = "UILabel"; text = "TRANSACTION SETTINGS"; ObjectID = "5G3-2h-S6m"; */
+"5G3-2h-S6m.text" = "IMPOSTAZIONI TRANSAZIONE";
+
+/* Class = "UILabel"; text = "Storno"; ObjectID = "8KK-22-sKt"; */
+"8KK-22-sKt.text" = "Storno";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "9Yd-fU-BSQ"; */
+"9Yd-fU-BSQ.text" = "Etichetta";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "9rk-e0-VE5"; */
+"9rk-e0-VE5.text" = "Etichetta";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "B7e-qs-mCB"; */
+"B7e-qs-mCB.text" = "Etichetta";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "CER-KM-zxW"; */
+"CER-KM-zxW.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "REGISTER TRANSACTION"; ObjectID = "CeL-XR-gga"; */
+"CeL-XR-gga.normalTitle" = "REGISTRA TRANSAZIONE";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "CmH-tl-O04"; */
+"CmH-tl-O04.text" = "Etichetta";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "DQN-87-eoI"; */
+"DQN-87-eoI.text" = "Etichetta";
+
+/* Class = "UILabel"; text = "Bank"; ObjectID = "Ez0-HD-eol"; */
+"Ez0-HD-eol.text" = "Banca";
+
+/* Class = "UIButton"; normalTitle = "CANCEL ORDER"; ObjectID = "Fj8-gg-URY"; */
+"Fj8-gg-URY.normalTitle" = "ANNULLA PARTITA";
+
+/* Class = "UINavigationItem"; title = "Title"; ObjectID = "FlK-7e-gj9"; */
+"FlK-7e-gj9.title" = "Titolo";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "G3h-o4-Xlt"; */
+"G3h-o4-Xlt.text" = "Etichetta";
+
+/* Class = "UILabel"; text = "Order to be concluded"; ObjectID = "G5d-kd-lg8"; */
+"G5d-kd-lg8.text" = "Partita Aperta";
+
+/* Class = "UILabel"; text = "Transaction"; ObjectID = "GOF-gt-UzB"; */
+"GOF-gt-UzB.text" = "Transazione";
+
+/* Class = "UILabel"; text = "Notes"; ObjectID = "Ino-DI-hWg"; */
+"Ino-DI-hWg.text" = "Note";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "JU2-Yp-3ak"; */
+"JU2-Yp-3ak.text" = "Etichetta";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "K3F-w4-Yli"; */
+"K3F-w4-Yli.text" = "Etichetta";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "NG3-JT-e39"; */
+"NG3-JT-e39.text" = "Etichetta";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "O28-L5-8gM"; */
+"O28-L5-8gM.text" = "Etichetta";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Rpb-vB-pAE"; */
+"Rpb-vB-pAE.text" = "Etichetta";
+
+/* Class = "UILabel"; text = "Total"; ObjectID = "S42-NR-quH"; */
+"S42-NR-quH.text" = "Totale";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "TjT-OE-otW"; */
+"TjT-OE-otW.text" = "Etichetta";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "XgD-EQ-w62"; */
+"XgD-EQ-w62.text" = "Etichetta";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "XgZ-p5-G3f"; */
+"XgZ-p5-G3f.text" = "Etichetta";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Zby-Sb-jWV"; */
+"Zby-Sb-jWV.text" = "Etichetta";
+
+/* Class = "UILabel"; text = "Kind"; ObjectID = "c9f-80-EEa"; */
+"c9f-80-EEa.text" = "Tipologia";
+
+/* Class = "UILabel"; text = "Total"; ObjectID = "ct2-uk-632"; */
+"ct2-uk-632.text" = "Totale";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "fF0-l5-MAZ"; */
+"fF0-l5-MAZ.text" = "Etichetta";
+
+/* Class = "UILabel"; text = "Check Number"; ObjectID = "ftf-Yq-qAS"; */
+"ftf-Yq-qAS.text" = "Numero Assegno";
+
+/* Class = "UIButton"; normalTitle = "REGISTER TRANSACTION"; ObjectID = "gO7-oF-mUz"; */
+"gO7-oF-mUz.normalTitle" = "REGISTRA TRANSAZIONE";
+
+/* Class = "UILabel"; text = "Still to receive"; ObjectID = "iWP-Y2-4YU"; */
+"iWP-Y2-4YU.text" = "Ancora da ricevere";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "iwL-wq-aV2"; */
+"iwL-wq-aV2.text" = "Etichetta";
+
+/* Class = "UILabel"; text = "Payment Method"; ObjectID = "jh0-g4-eY7"; */
+"jh0-g4-eY7.text" = "Metodo di Pagamento";
+
+/* Class = "UILabel"; text = "Cash"; ObjectID = "kJH-fT-KR5"; */
+"kJH-fT-KR5.text" = "Contanti";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "mdN-e8-stW"; */
+"mdN-e8-stW.text" = "Etichetta";
+
+/* Class = "UILabel"; text = "Order to be concluded"; ObjectID = "sVA-eF-HjM"; */
+"sVA-eF-HjM.text" = "Partita Aperta";
+
+/* Class = "UILabel"; text = "Advance"; ObjectID = "sbP-rA-3b7"; */
+"sbP-rA-3b7.text" = "Acconto";
+
+/* Class = "UILabel"; text = "Check"; ObjectID = "sqH-Gc-Oyw"; */
+"sqH-Gc-Oyw.text" = "Assegno";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "tvl-OP-VV9"; */
+"tvl-OP-VV9.text" = "Etichetta";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "vMp-oo-5kX"; */
+"vMp-oo-5kX.text" = "Etichetta";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "vxk-v0-NAq"; */
+"vxk-v0-NAq.text" = "Etichetta";
+
+/* Class = "UILabel"; text = "Manage Order"; ObjectID = "xJF-GR-HqC"; */
+"xJF-GR-HqC.text" = "Gestisci Partita";
+
+/* Class = "UINavigationItem"; title = "Select a customer"; ObjectID = "xky-4h-gpH"; */
+"xky-4h-gpH.title" = "Seleziona un Cliente";
+
+/* Class = "UILabel"; text = "Balance"; ObjectID = "yc4-Cj-4R3"; */
+"yc4-Cj-4R3.text" = "Saldo";
+
+/* Class = "UILabel"; text = "Order to be concluded"; ObjectID = "ypj-fn-cdp"; */
+"ypj-fn-cdp.text" = "Partita Aperta";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "zRr-jM-26z"; */
+"zRr-jM-26z.text" = "Etichetta";

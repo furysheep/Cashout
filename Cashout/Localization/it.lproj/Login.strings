@@ -1,0 +1,12 @@
+
+/* Class = "UINavigationItem"; title = "Root View Controller"; ObjectID = "fh3-V2-R1g"; */
+"fh3-V2-R1g.title" = "Root View Controller";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "hB0-ag-PvV"; */
+"hB0-ag-PvV.placeholder" = "Password";
+
+/* Class = "UITextField"; placeholder = "Email"; ObjectID = "jJv-tO-siR"; */
+"jJv-tO-siR.placeholder" = "Email";
+
+/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "zta-2b-pi1"; */
+"zta-2b-pi1.normalTitle" = "accesso";

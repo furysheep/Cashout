@@ -1,0 +1,53 @@
+/* 
+  Localizable.strings
+  Cashout
+*/
+
+"Order Completed" = "Order Completed";
+"The order of " = "The order of ";
+" of " = " of ";
+" has been completed!" = " has been completed!";
+"Print Receipt" = "Print Receipt";
+"Order Cancelled" = "Order Cancelled";
+"The order of " = "The order of ";
+" has been cancelled." = " has been cancelled.";
+"Back" = "Back";
+"Order" = "Order";
+"Search..." = "Search...";
+"Business Name: " = "Business Name: ";
+"Name: " = "Name: ";
+"Address: " = "Address: ";
+"Phone: " = "Phone: ";
+"Email: " = "Email: ";
+"P.IVA: " = "P.IVA: ";
+"CF: " = "CF: ";
+"SID: " = "SID: ";
+"Alert" = "Alert";
+"OK" = "OK";
+"Email cannot be blank" = "Email cannot be blank";
+"Enter a valid email address [Eg:abc@yahoo.com]" = "Enter a valid email address [Eg:abc@yahoo.com]";
+"Please enter password" = "Please enter password";
+"To have € " = "To have € ";
+"Transaction #" = "Transaction #";
+"Transaction for € " = "Transaction for € ";
+"Order #" = "Order #";
+"item" = "item";
+"Date" = "Date";
+"Transaction Amount Cannot be Blank" = "Transaction Amount Cannot be Blank";
+"Advance" = "Advance";
+"Balance" = "Balance";
+"Storno" = "Storno";
+"Transaction" = "Transaction";
+"Total" = "Total";
+"Notes" = "Notes";
+"Kind" = "Kind";
+"Check Number" = "Check Number";
+"Bank" = "Bank";
+"Payment Method" = "Payment Method";
+"TRANSACTION SETTINGS" = "TRANSACTION SETTINGS";
+"Cash" = "Cash";
+"Check" = "Check";
+"Bank Name Cannot be Blank" = "Bank Name Cannot be Blank";
+"Check No Cannot be Blank" = "Check No Cannot be Blank";
+"Still to get: € " = "Still to get: € ";
+"Paid" = "Paid";

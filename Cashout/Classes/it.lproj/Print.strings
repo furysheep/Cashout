@@ -1,0 +1,48 @@
+
+/* Class = "UILabel"; text = "Agent:"; ObjectID = "0Af-AI-rMM"; */
+"0Af-AI-rMM.text" = "Agent:";
+
+/* Class = "UILabel"; text = "Date"; ObjectID = "45e-7d-JyX"; */
+"45e-7d-JyX.text" = "Date";
+
+/* Class = "UILabel"; text = "check refer"; ObjectID = "5a8-dJ-Vip"; */
+"5a8-dJ-Vip.text" = "check refer";
+
+/* Class = "UILabel"; text = "Total"; ObjectID = "8zn-KA-K5w"; */
+"8zn-KA-K5w.text" = "Totale";
+
+/* Class = "UILabel"; text = "Comments"; ObjectID = "Cca-jP-uUM"; */
+"Cca-jP-uUM.text" = "Note";
+
+/* Class = "UILabel"; text = "This transaction:"; ObjectID = "GNc-KV-dhf"; */
+"GNc-KV-dhf.text" = "Questa transazione:";
+
+/* Class = "UILabel"; text = "Receipt"; ObjectID = "Li2-gA-L1x"; */
+"Li2-gA-L1x.text" = "Ricevuta";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "TlX-Lf-lqe"; */
+"TlX-Lf-lqe.text" = "Dettagli";
+
+/* Class = "UILabel"; text = "Transaction"; ObjectID = "UJo-tP-Esg"; */
+"UJo-tP-Esg.text" = "Transaction";
+
+/* Class = "UILabel"; text = "This transaction:"; ObjectID = "dQg-Ts-5ta"; */
+"dQg-Ts-5ta.text" = "This transaction:";
+
+/* Class = "UILabel"; text = "Bank"; ObjectID = "g3j-BF-9DG"; */
+"g3j-BF-9DG.text" = "Banca";
+
+/* Class = "UILabel"; text = "Recipient"; ObjectID = "gaw-ef-Uqm"; */
+"gaw-ef-Uqm.text" = "Cliente";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "h0X-18-YtO"; */
+"h0X-18-YtO.text" = "Label";
+
+/* Class = "UILabel"; text = "Order"; ObjectID = "kxJ-87-a9o"; */
+"kxJ-87-a9o.text" = "Order";
+
+/* Class = "UILabel"; text = "Payement Method"; ObjectID = "qGq-4h-SGD"; */
+"qGq-4h-SGD.text" = "Metodo di Pagamento";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "sfT-7H-Sq0"; */
+"sfT-7H-Sq0.text" = "Label";
