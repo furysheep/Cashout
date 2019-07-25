@@ -9,10 +9,13 @@
 import UIKit
 
 class RegoPrinterSelectViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, DropDownChooseDelegate, DropDownChooseDataSource, UITextFieldDelegate {
+    var receiptImage: UIImage!
+    
     let mPrinter = regoPrinter.shareManager() as! regoPrinter
     var nameArr = [String]()
     var modelsDropDownView: DropDownListView!
     var per: String? = nil
+    
     @IBOutlet weak var segment: UISegmentedControl!
     @IBOutlet weak var viewWIFI: UIView!
     @IBOutlet weak var viewBT: UIView!
@@ -22,6 +25,7 @@ class RegoPrinterSelectViewController: UIViewController, UITableViewDelegate, UI
     @IBOutlet weak var scanButton: UIButton!
     @IBOutlet weak var tableViewBT: UITableView!
     @IBOutlet weak var IPConnect: UIButton!
+    
     var cell: UITableViewCell!
     var m_PrinterDataMulArray = NSMutableArray()
     
@@ -38,6 +42,18 @@ class RegoPrinterSelectViewController: UIViewController, UITableViewDelegate, UI
         let userDefaults = UserDefaults.standard
         IPAddr.text = userDefaults.string(forKey: "ip")
         IPPort.text = userDefaults.string(forKey: "port")
+        
+        var str = UserDefaults.standard.string(forKey: "value")
+        if (str != nil) {
+            modelsDropDownView.setTitle(str!, inSection: 0)
+        } else {
+            str = nameArr[0]
+            modelsDropDownView.setTitle(nameArr[0], inSection: 0)
+        }
+        mPrinter.stringName = str
+        
+        let selected = UserDefaults.standard.integer(forKey: "selected")
+        segment.selectedSegmentIndex = selected
     }
     
     override func viewDidLayoutSubviews() {
@@ -78,6 +94,19 @@ class RegoPrinterSelectViewController: UIViewController, UITableViewDelegate, UI
     }
     
     @IBAction func cancel(_ sender: Any) {
+        self.navigationController?.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func doPrint(_ sender: Any) {
+        mPrinter.ascii_CtrlReset(0)
+        mPrinter.con_PageStart(0, graphicMode: true, mWidth: 384, mHeight: Int32(receiptImage.size.height))
+        mPrinter.con_Pic_start(0)
+        mPrinter.con_PrintPicture(receiptImage, aDensity: 0.83)
+        mPrinter.con_Pic_end(0)
+
+        let segment_selected = UserDefaults.standard.integer(forKey: "selected")
+        mPrinter.con_PageEnd(0, tm: TransferMode(rawValue: TransferMode.RawValue(segment_selected)))
+        
         self.navigationController?.dismiss(animated: true, completion: nil)
     }
     

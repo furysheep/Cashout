@@ -1438,6 +1438,11 @@
                                 <action selector="cancel:" destination="OA2-hu-IKE" id="5Ys-cx-Pkc"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Print" id="SYL-it-oMX">
+                            <connections>
+                                <action selector="doPrint:" destination="OA2-hu-IKE" id="FNm-wG-xUq"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="IPAddr" destination="hQl-Jd-2EM" id="3jm-5k-qns"/>

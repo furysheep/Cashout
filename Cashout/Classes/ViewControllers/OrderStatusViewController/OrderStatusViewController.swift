@@ -23,6 +23,8 @@ class OrderStatusViewController: BaseViewController {
     var selectedOrder = Order()
     var selectedTrans = Transaction()
     
+    var receiptImage: UIImage!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -90,7 +92,7 @@ class OrderStatusViewController: BaseViewController {
     {
         
         //guard let path = Bundle.main.url(forResource: "Receipt", withExtension: "pdf") else { return }
-        
+        receiptImage = viewController.view.toImage()
         let alertController = UIAlertController(title: "Select printer type", message: nil, preferredStyle: .actionSheet)
         alertController.modalPresentationStyle = .popover
         alertController.popoverPresentationController?.sourceView = view
@@ -104,6 +106,13 @@ class OrderStatusViewController: BaseViewController {
         }))
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         present(alertController, animated: true)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "showRollPrint") {
+            let printerVC = (segue.destination as! UINavigationController).viewControllers[0] as! RegoPrinterSelectViewController
+            printerVC.receiptImage = receiptImage
+        }
     }
     
     func regoPrint() {
