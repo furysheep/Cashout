@@ -19,8 +19,13 @@
 "Address: " = "Indirizzo: ";
 "Phone: " = "Telefono: ";
 "Email: " = "Email: ";
-"P.IVA: " = "P.IVA: ";
-"CF: " = "CF: ";
+"P.IVA:" = "P.IVA:";
+"CF:" = "CF:";
+"Comments/Notes" = "Commenti/Note";
+"no note" = "nessuna nota";
+"Payment method:" = "Pagamento effettuato tramite:";
+"This transaction:" = "Questa transazione:";
+"Agent:" = "Agente:";
 "SID: " = "SID: ";
 "Alert" = "Attenzione";
 "OK" = "OK";
@@ -53,7 +58,7 @@
 "Notes" = "Note";
 "Paid" = "Pagato";
 "Still to get" = "Ancora da Ricevere";
-"Order #" = "Partita #";
+"Order #" = "Ordine #";
 "item" = "voce";
 "Date" = "Data";
 "Transaction Amount Cannot be Blank" = "Ammontare Obbligatorio";

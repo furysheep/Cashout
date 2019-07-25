@@ -1176,23 +1176,23 @@
             <objects>
                 <viewController id="OA2-hu-IKE" customClass="RegoPrinterSelectViewController" customModule="Cashout" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pa7-5D-Gvz">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="748"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="698"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Type" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sg7-Iv-Aux">
-                                <rect key="frame" x="30" y="90" width="38" height="21"/>
+                                <rect key="frame" x="30" y="40" width="38" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F5j-Q7-R9x">
-                                <rect key="frame" x="30" y="151" width="39.5" height="21"/>
+                                <rect key="frame" x="30" y="101" width="39.5" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" translatesAutoresizingMaskIntoConstraints="NO" id="6Oj-d1-qQo">
-                                <rect key="frame" x="128" y="141.5" width="610" height="41"/>
+                                <rect key="frame" x="128" y="91.5" width="610" height="41"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="gTh-RV-ILC"/>
                                 </constraints>
@@ -1206,13 +1206,13 @@
                                 </connections>
                             </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Port" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sf2-cx-4eW">
-                                <rect key="frame" x="30" y="212" width="32.5" height="21"/>
+                                <rect key="frame" x="30" y="162" width="32.5" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3ND-Be-ZXD">
-                                <rect key="frame" x="128" y="202.5" width="295" height="40"/>
+                                <rect key="frame" x="128" y="152.5" width="295" height="40"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nwn-vd-EvR">
                                         <rect key="frame" x="0.0" y="0.0" width="295" height="40"/>
@@ -1236,7 +1236,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qzz-Jr-cG7">
-                                <rect key="frame" x="443" y="202.5" width="295" height="40"/>
+                                <rect key="frame" x="443" y="152.5" width="295" height="40"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rsu-TZ-K9j">
                                         <rect key="frame" x="0.0" y="0.0" width="295" height="40"/>
@@ -1259,7 +1259,7 @@
                                 </constraints>
                             </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e4Q-Lw-Nx1">
-                                <rect key="frame" x="30" y="262.5" width="708" height="455.5"/>
+                                <rect key="frame" x="30" y="212.5" width="708" height="455.5"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dgo-j3-pVJ">
                                         <rect key="frame" x="0.0" y="0.0" width="708" height="1"/>
@@ -1480,7 +1480,8 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="pageSheet" id="bAF-2Y-GJM" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="EIw-Iq-CWV">
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="EIw-Iq-CWV">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

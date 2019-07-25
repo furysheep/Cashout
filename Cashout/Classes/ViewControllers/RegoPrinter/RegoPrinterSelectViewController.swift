@@ -13,7 +13,7 @@ class RegoPrinterSelectViewController: UIViewController, UITableViewDelegate, UI
     
     let mPrinter = regoPrinter.shareManager() as! regoPrinter
     var nameArr = [String]()
-    var modelsDropDownView: DropDownListView!
+    var modelsDropDownView: DropDownListView? = nil
     var per: String? = nil
     
     @IBOutlet weak var segment: UISegmentedControl!
@@ -31,35 +31,36 @@ class RegoPrinterSelectViewController: UIViewController, UITableViewDelegate, UI
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         nameArr = mPrinter.con_GetSupportPrinters() as! [String]
         nameArr[0] = "RG_MTP_58B"
         
-        modelsDropDownView = DropDownListView(frame: CGRect(x: 128, y: 120, width: view.frame.size.width - 158, height: 40), dataSource: self, delegate: self)
-        modelsDropDownView.mSuperView = view
-        view.addSubview(modelsDropDownView)
-        
-        let userDefaults = UserDefaults.standard
-        IPAddr.text = userDefaults.string(forKey: "ip")
-        IPPort.text = userDefaults.string(forKey: "port")
-        
-        var str = UserDefaults.standard.string(forKey: "value")
-        if (str != nil) {
-            modelsDropDownView.setTitle(str!, inSection: 0)
-        } else {
-            str = nameArr[0]
-            modelsDropDownView.setTitle(nameArr[0], inSection: 0)
-        }
-        mPrinter.stringName = str
-        
-        let selected = UserDefaults.standard.integer(forKey: "selected")
-        segment.selectedSegmentIndex = selected
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        modelsDropDownView.setNeedsLayout()
+        if (modelsDropDownView == nil) {
+            modelsDropDownView = DropDownListView(frame: CGRect(x: 128, y: 30, width: view.frame.size.width - 158, height: 40), dataSource: self, delegate: self)
+            modelsDropDownView!.mSuperView = view
+            view.addSubview(modelsDropDownView!)
+            
+            let userDefaults = UserDefaults.standard
+            IPAddr.text = userDefaults.string(forKey: "ip")
+            IPPort.text = userDefaults.string(forKey: "port")
+            
+            var str = UserDefaults.standard.string(forKey: "value")
+            if (str != nil) {
+                modelsDropDownView!.setTitle(str!, inSection: 0)
+            } else {
+                str = nameArr[0]
+                modelsDropDownView!.setTitle(nameArr[0], inSection: 0)
+            }
+            mPrinter.stringName = str
+            
+            let selected = UserDefaults.standard.integer(forKey: "selected")
+            segment.selectedSegmentIndex = selected
+        }
     }
     
     @IBAction func onSegmentControl(_ sender: Any) {
@@ -67,7 +68,7 @@ class RegoPrinterSelectViewController: UIViewController, UITableViewDelegate, UI
         userDefaults.set(segment.selectedSegmentIndex, forKey: "selected")
         userDefaults.synchronize()
     }
-
+    
     @IBAction func selectBT(_ sender: Any) {
         viewNext.isHidden = false
         viewBT.isHidden = false
@@ -103,7 +104,7 @@ class RegoPrinterSelectViewController: UIViewController, UITableViewDelegate, UI
         mPrinter.con_Pic_start(0)
         mPrinter.con_PrintPicture(receiptImage, aDensity: 0.83)
         mPrinter.con_Pic_end(0)
-
+        
         let segment_selected = UserDefaults.standard.integer(forKey: "selected")
         mPrinter.con_PageEnd(0, tm: TransferMode(rawValue: TransferMode.RawValue(segment_selected)))
         
@@ -112,8 +113,8 @@ class RegoPrinterSelectViewController: UIViewController, UITableViewDelegate, UI
     
     // MARK: - Bluetooth search callback
     @objc func PrintersMulArrayFount(_ peripheralsMulArray: NSMutableArray) {
-    //    NSLog(@"获取蓝牙代理函数设备");
-    //    NSLog(@"peripheralsMulArray +++++++++++++  %@",peripheralsMulArray);
+        //    NSLog(@"获取蓝牙代理函数设备");
+        //    NSLog(@"peripheralsMulArray +++++++++++++  %@",peripheralsMulArray);
         m_PrinterDataMulArray = peripheralsMulArray
         tableViewBT.reloadData()
     }
@@ -209,11 +210,10 @@ class RegoPrinterSelectViewController: UIViewController, UITableViewDelegate, UI
             let state = mPrinter.con_ConnectDevices(strValue, mTimeout: 5)
             
             if (state == 5) {
-                let selected = userDefaults.string(forKey: "selected")
-                let segment_selected = Int(selected!)
+                let segment_selected = userDefaults.integer(forKey: "selected")
                 
                 let strName = userDefaults.string(forKey: "value")
-
+                
                 userDefaults.setValue(IPAddr.text, forKey: "ip")
                 userDefaults.setValue(IPPort.text, forKey: "port")
                 

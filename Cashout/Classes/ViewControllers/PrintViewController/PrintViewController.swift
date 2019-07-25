@@ -39,14 +39,14 @@ class PrintViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         self.lblDate.text = String.init(format: "%@: %@", "Date".localized(),self.selectedTrans.transactionDate)
         self.lblOrder.text = String(format: "%@%@", "Order #".localized(),self.selectedOrder.number)
         self.lblTransaction.text = String.init(format: "%@%@", "Transaction #".localized(),self.selectedTrans.number)
-        self.lblRecipient.text = String.init(format: "%@%@", "Recipient: ".localized(),SharedClass.shared.currentSelectedCustomer.address)
-        self.lblThisTransaction.text = "This transaction: € ".localized() + "\(self.selectedTrans.price)"
-        self.lblPaymentMethod.text = String.init(format: "%@%@", "Payment Method:".localized(),self.selectedTrans.transactionType)
+        self.lblRecipient.text = String.init(format: "%@\n%@", "Recipient: ".localized(),SharedClass.shared.currentSelectedCustomer.address)
+        self.lblThisTransaction.text = "This transaction:".localized() + "\n\(self.selectedTrans.price) €"
+        self.lblPaymentMethod.text = String.init(format: "%@\n%@", "Payment method:".localized(),self.selectedTrans.transactionType)
         self.lblBank.text = String.init(format: "%@%@", "Bank:".localized(),self.selectedTrans.bank)
-        self.lblComments.text = String.init(format: "%@%@", "Comments:".localized(),self.selectedOrder.note)
+        self.lblComments.text = String.init(format: "%@\n%@", "Comments/Notes".localized(),self.selectedOrder.note.trimSpace() == "" ? "no note".localized() : self.selectedOrder.note)
         self.lblCheckNo.text = String.init(format: "%@%@", "CheckNo:".localized(),self.selectedTrans.chequeNo)
         self.lblSellerNameAddress.text = self.computeSellerDetails()
-        self.lblAgentCode.text = String.init(format: "%@%@", "AgentCode:".localized(),(UserManager.shared.loggedInUser?.agentCode)!)
+        self.lblAgentCode.text = String.init(format: "%@ %@", "Agent:".localized(),(UserManager.shared.loggedInUser?.agentCode)!)
         self.tblViewPrint.setNeedsLayout()
         self.tblViewPrint.layoutIfNeeded()
     }
@@ -55,7 +55,7 @@ class PrintViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         let sellerDetail = """
         \((UserManager.shared.loggedInUser?.company?.first?.name!)!)
         \((UserManager.shared.loggedInUser?.company?.first?.completeAddress)!)
-        \("P.IVA: ".localized())\((UserManager.shared.loggedInUser?.company?.first?.pIVA)!) \(", CF:  ".localized())\((UserManager.shared.loggedInUser?.company?.first?.cF)!)
+        \("P.IVA:".localized())\((UserManager.shared.loggedInUser?.company?.first?.pIVA)!)\n\("CF: ".localized())\((UserManager.shared.loggedInUser?.company?.first?.cF)!)
         """
         return sellerDetail
     }

@@ -19,8 +19,13 @@
 "Address: " = "Address: ";
 "Phone: " = "Phone: ";
 "Email: " = "Email: ";
-"P.IVA: " = "P.IVA: ";
-"CF: " = "CF: ";
+"P.IVA:" = "P.IVA:";
+"CF:" = "CF:";
+"Comments/Notes" = "Comments/Notes";
+"no note" = "no note";
+"Payment method:" = "Payment method:";
+"This transaction:" = "This transaction:";
+"Agent:" = "Agente:";
 "SID: " = "SID: ";
 "Alert" = "Alert";
 "OK" = "OK";
