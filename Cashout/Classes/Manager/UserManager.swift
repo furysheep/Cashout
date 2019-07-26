@@ -56,7 +56,22 @@ class UserManager {
         self._setUserInDefault(user: user)
     }
     
-    
+    func logout(completion: @escaping (Bool) -> Void) {
+        Alamofire.request(URL.init(string: Constants.endpoint+"/logout")!, method: .post, parameters: [:],encoding: JSONEncoding.default, headers: ["Content-Type": "application/json", "Authorization":(""+TokenManager.shared.userToken!)]).responseJSON { (serverResponse) in
+            if let responseCode = serverResponse.response?.statusCode {
+                if (serverResponse.result.isSuccess) {
+                    //            if let data = serverResponse.data {
+                    //                print(String(bytes: data, encoding: .utf8))
+                    //            }
+                    UserManager.shared.resetUser()
+                    TokenManager.shared.resetToken()
+                    completion(true)
+                    return;
+                }
+            }
+            completion(false)
+        }
+    }
     
     func makePostCallWithAlamofire(email:String, password:String,completion: @escaping (Bool) -> Void) {
         Alamofire.request(URL.init(string: Constants.endpoint+"/login")!, method: .post, parameters: ["email":email,"password":password],encoding: JSONEncoding.default, headers: ["Content-Type": "application/json"]).responseJSON { [weak self] (serverResponse) in

@@ -38,6 +38,20 @@ class CustomerViewController: BaseViewController,UITableViewDelegate,UITableView
         self.navigationItem.title = "\(self.selectedCustomer.companyName)"
         self.setLabelUI()
         self.setSegmentedControlUI()
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Logout".localized(), style: .plain, target: self, action: #selector(logout))
+    }
+    
+    @objc func logout() {
+        Constants.showLoader()
+        UserManager.shared.logout() { (success) in
+            Constants.hideLoader()
+            
+            if (success) {
+                self.splitViewController?.dismiss(animated: true, completion: nil)
+            } else {
+                Constants.showAlert(message: "Please Retry")
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -62,8 +62,16 @@ class Constants {
         alert.addAction(UIAlertAction(title: String.strOk, style: .default) { action in
             // perhaps use action.title here
         })
-        let navigationController = UIApplication.shared.windows[0].rootViewController as! UINavigationController
-        navigationController.present(alert, animated: true, completion: nil)
+        
+        if var topController = UIApplication.shared.keyWindow?.rootViewController {
+            while let presentedViewController = topController.presentedViewController {
+                topController = presentedViewController
+            }
+            
+            // topController should now be your topmost view controller
+            
+            topController.present(alert, animated: true, completion: nil)
+        }
     }
     
     // MARK: - Loader method

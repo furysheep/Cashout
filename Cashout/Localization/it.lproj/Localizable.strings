@@ -3,6 +3,7 @@
  Cashout
  */
 
+"Logout" = "Esci";
 "Order Completed" = "Partita Chiusa";
 "The order of " = "Partita di ";
 " of " = " di ";

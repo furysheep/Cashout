@@ -24,8 +24,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.renderUI()
-        self.txtFieldEmail.text = "agente@dolciaria.it"
-        self.txtFieldPassword.text = "passwordtemporanea"
+        
         if TokenManager.shared.userToken != nil { // User is logged in
             self.redirectToHome()
         }
