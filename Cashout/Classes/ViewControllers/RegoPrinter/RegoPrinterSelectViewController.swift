@@ -35,6 +35,8 @@ class RegoPrinterSelectViewController: UIViewController, UITableViewDelegate, UI
         nameArr = mPrinter.con_GetSupportPrinters() as! [String]
         nameArr[0] = "RG_MTP_58B"
         
+        segment.setTitle("None".localized(), forSegmentAt: 0)
+        scanButton.setTitle("Scan".localized(), for: .normal)
     }
     
     override func viewDidLayoutSubviews() {
@@ -86,11 +88,11 @@ class RegoPrinterSelectViewController: UIViewController, UITableViewDelegate, UI
     }
     
     @IBAction func onScan(_ sender: Any) {
-        if (scanButton.currentTitle == "Scan"){
+        if (scanButton.currentTitle == "Scan".localized()){
             mPrinter.con_GetRemoteBTPrinters(self)
-        } else if(scanButton.currentTitle == "Disconnect"){
+        } else if(scanButton.currentTitle == "Disconnect".localized()){
             mPrinter.con_CloseDevice(0)
-            scanButton.setTitle("Scan", for: .normal)
+            scanButton.setTitle("Scan".localized(), for: .normal)
         }
     }
     
@@ -133,19 +135,19 @@ class RegoPrinterSelectViewController: UIViewController, UITableViewDelegate, UI
         }
         
         let alert = UIAlertController(title: "Query Status", message: mess, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel, handler: nil))
         present(alert, animated: true)
     }
     
     @objc func PrinterConnected() {
-        scanButton.setTitle("Disconnect", for: .normal)
+        scanButton.setTitle("Disconnect".localized(), for: .normal)
         
         let str = UserDefaults.standard.string(forKey: "value")
         let segment_selected = segment.selectedSegmentIndex
     }
     
     @objc func PrinterClosed() {
-        scanButton.setTitle("Scan", for: .normal)
+        scanButton.setTitle("Scan".localized(), for: .normal)
     }
     
     // MARK: TableView delegate
@@ -188,9 +190,9 @@ class RegoPrinterSelectViewController: UIViewController, UITableViewDelegate, UI
     
     // MARK: Wifi
     @IBAction func onIPConnect(_ sender: Any) {
-        if (IPConnect.currentTitle == "Disconnect") {
+        if (IPConnect.currentTitle == "Disconnect".localized()) {
             mPrinter.con_CloseDevice(0)
-            IPConnect.setTitle("Connect", for: .normal)
+            IPConnect.setTitle("Connect".localized(), for: .normal)
         } else {
             let userDefaults = UserDefaults.standard
             let strName = userDefaults.string(forKey: "value")
@@ -218,14 +220,14 @@ class RegoPrinterSelectViewController: UIViewController, UITableViewDelegate, UI
                 userDefaults.setValue(IPPort.text, forKey: "port")
                 
                 userDefaults.synchronize()
-                IPConnect.setTitle("Disconnect", for: .normal)
+                IPConnect.setTitle("Disconnect".localized(), for: .normal)
                 //            self.btn.enabled=YES;
                 
             }
             else if(state == 3){
                 //            NSLog(@"连接失败");
-                let alert = UIAlertController(title: "Attention", message: "Connection failed", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+                let alert = UIAlertController(title: "Attention".localized(), message: "Connection failed".localized(), preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Cancel".localized(), style: .default, handler: nil))
                 present(alert, animated: true, completion: nil)
             }
         }

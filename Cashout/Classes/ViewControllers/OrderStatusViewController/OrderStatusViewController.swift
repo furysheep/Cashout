@@ -93,7 +93,7 @@ class OrderStatusViewController: BaseViewController {
         
         //guard let path = Bundle.main.url(forResource: "Receipt", withExtension: "pdf") else { return }
         receiptImage = viewController.view.toImage()
-        let alertController = UIAlertController(title: "Select printer type", message: nil, preferredStyle: .actionSheet)
+        let alertController = UIAlertController(title: "Select printer type".localized(), message: nil, preferredStyle: .actionSheet)
         alertController.modalPresentationStyle = .popover
         alertController.popoverPresentationController?.sourceView = view
         alertController.popoverPresentationController?.sourceRect = btnPrintBack.frame
@@ -101,11 +101,13 @@ class OrderStatusViewController: BaseViewController {
         alertController.addAction(UIAlertAction(title: "AirPrint", style: .default, handler: { (action) in
             self.airPrint(viewController: viewController)
         }))
-        alertController.addAction(UIAlertAction(title: "Roll Print", style: .default, handler: { (action) in
+        alertController.addAction(UIAlertAction(title: "Roll Print".localized(), style: .default, handler: { (action) in
             self.regoPrint()
         }))
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        present(alertController, animated: true)
+        alertController.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel, handler: nil))
+        present(alertController, animated: true, completion: {() -> Void in
+            alertController.view.tintColor = self.btnPrintBack.backgroundColor
+        })
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

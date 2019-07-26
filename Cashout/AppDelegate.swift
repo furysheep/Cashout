@@ -29,6 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     //write the migration logic here
                 }
         })
+        self.window?.tintColor = UIColor(red: 0, green: 0.55, blue: 0.25, alpha: 1)
         
         return true
     }

@@ -14,6 +14,16 @@
 "Back" = "Indietro";
 "Order" = "Partita";
 "Search..." = "Cerca...";
+"Connect" = "Connetti";
+"Disconnect" = "Disconnetti";
+"Cancel" = "Annulla";
+"Scan" = "Scansione";
+"Connection failed" = "Connessione fallita";
+"Attention" = "Attenzione";
+"Select printer type" = "Seleziona il tipo di stampante";
+"Roll Print" = "Scontrino";
+"Print" = "Stampa";
+"None" = "Nessuno";
 "Business Name: " = "Ragione Sociale: ";
 "Name: " = "Nome: ";
 "Address: " = "Indirizzo: ";
@@ -21,6 +31,7 @@
 "Email: " = "Email: ";
 "P.IVA:" = "P.IVA:";
 "CF:" = "CF:";
+"Recipient:" = "Destinatario:";
 "Comments/Notes" = "Commenti/Note";
 "no note" = "nessuna nota";
 "Payment method:" = "Pagamento effettuato tramite:";

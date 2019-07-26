@@ -22,6 +22,9 @@ class PrintViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     
     @IBOutlet weak var viewHeader: UIView!
     @IBOutlet weak var tblViewPrint: UITableView!
+    @IBOutlet weak var lblPrint: UILabel!
+    @IBOutlet weak var tableHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var lastView: UIView!
     
     var selectedOrder = Order()
     var selectedTrans = Transaction()
@@ -34,21 +37,35 @@ class PrintViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         
     }
     
+    override func viewDidLayoutSubviews() {
+        view.bounds = CGRect(x: 0, y: 0, width: view.bounds.width, height: lastView.frame.origin.y + lastView.frame.size.height + 50)
+    }
+    
     private func setUI() {
         // self.lblRecipt.text?.append(contentsOf: <#T##String#>)
-        self.lblDate.text = String.init(format: "%@: %@", "Date".localized(),self.selectedTrans.transactionDate)
+        self.lblDate.text = String.init(format: "%@: %@", "Date".localized(),self.selectedTrans.transactionDate.split(separator: "-").reversed().joined(separator: "/"))
         self.lblOrder.text = String(format: "%@%@", "Order #".localized(),self.selectedOrder.number)
         self.lblTransaction.text = String.init(format: "%@%@", "Transaction #".localized(),self.selectedTrans.number)
-        self.lblRecipient.text = String.init(format: "%@\n%@", "Recipient: ".localized(),SharedClass.shared.currentSelectedCustomer.address)
+        self.lblRecipient.text = String.init(format: "%@\n%@", "Recipient:".localized(),SharedClass.shared.currentSelectedCustomer.address)
         self.lblThisTransaction.text = "This transaction:".localized() + "\n\(self.selectedTrans.price) €"
         self.lblPaymentMethod.text = String.init(format: "%@\n%@", "Payment method:".localized(),self.selectedTrans.transactionType)
-        self.lblBank.text = String.init(format: "%@%@", "Bank:".localized(),self.selectedTrans.bank)
+        self.lblBank.text = String.init(format: "%@: %@", "Bank".localized(),self.selectedTrans.bank)
         self.lblComments.text = String.init(format: "%@\n%@", "Comments/Notes".localized(),self.selectedOrder.note.trimSpace() == "" ? "no note".localized() : self.selectedOrder.note)
-        self.lblCheckNo.text = String.init(format: "%@%@", "CheckNo:".localized(),self.selectedTrans.chequeNo)
+        self.lblCheckNo.text = String.init(format: "%@: %@", "Check".localized(),self.selectedTrans.chequeNo)
         self.lblSellerNameAddress.text = self.computeSellerDetails()
         self.lblAgentCode.text = String.init(format: "%@ %@", "Agent:".localized(),(UserManager.shared.loggedInUser?.agentCode)!)
         self.tblViewPrint.setNeedsLayout()
         self.tblViewPrint.layoutIfNeeded()
+        
+        let dateFormatter : DateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss"
+        let date = Date()
+        let dateString = dateFormatter.string(from: date)
+        self.lblPrint.text = String(format: "%@ %@", "Print".localized(), dateString)
+        
+        if (self.selectedOrder.Items.count == 0) {
+            tableHeightConstraint.constant = 0
+        }
     }
     
     private func computeSellerDetails() -> String {
@@ -78,6 +95,8 @@ class PrintViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         let cell:PrintTableViewCell = tblViewPrint.dequeueReusableCell(withIdentifier: Constants.TableViewCellIdentifier.printTableViewCellIdentifier, for: indexPath) as! PrintTableViewCell
         cell.selectionStyle = .none
         cell.configureItem(item: self.selectedOrder.Items[indexPath.row])
+        
+        tableHeightConstraint.constant = tableView.contentSize.height
         return cell
     }
 }

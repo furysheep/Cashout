@@ -14,6 +14,16 @@
 "Back" = "Back";
 "Order" = "Order";
 "Search..." = "Search...";
+"Connect" = "Connect";
+"Disconnect" = "Disconnect";
+"Cancel" = "Cancel";
+"Scan" = "Scan";
+"Connection failed" = "Connection failed";
+"Attention" = "Attention";
+"Select printer type" = "Select printer type";
+"Roll Print" = "Roll Print";
+"Print" = "Print";
+"None" = "None";
 "Business Name: " = "Business Name: ";
 "Name: " = "Name: ";
 "Address: " = "Address: ";
@@ -21,6 +31,7 @@
 "Email: " = "Email: ";
 "P.IVA:" = "P.IVA:";
 "CF:" = "CF:";
+"Recipient:" = "Recipient:";
 "Comments/Notes" = "Comments/Notes";
 "no note" = "no note";
 "Payment method:" = "Payment method:";
