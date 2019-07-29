@@ -2,7 +2,9 @@
   Localizable.strings
   Cashout
 */
-
+"Transaction Registered" = "Transaction Registered";
+"Please input lower amount" = "Please input lower amount";
+"A transaction of €%.2f has been registered." = "A transaction of €%.2f has been registered.";
 "Logout" = "Logout";
 "Order Completed" = "Order Completed";
 "The order of " = "The order of ";

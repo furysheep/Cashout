@@ -35,7 +35,7 @@ class OrderStatusViewController: BaseViewController {
         if (self.currentUIState == .transactionCompleted) {
             self.imgViewOrderStatus.image = #imageLiteral(resourceName: "orderStatusCompleted")
             self.lblOrderStatus.text = "Transaction Registered".localized()
-            self.lblOrderStatusDetail.text = "A transaction of € ".localized()+"\(self.selectedTrans.price) "+"for".localized()+"\(customerName)"+" has been registered.".localized()
+            self.lblOrderStatusDetail.text = String.localizedStringWithFormat("A transaction of €%.2f has been registered.".localized(), self.selectedTrans.price)
             self.btnPrintBack.setTitle("Print Receipt".localized(), for: UIControl.State.normal)
             self.btnPrintBack.backgroundColor = #colorLiteral(red: 0, green: 0.5490196078, blue: 0.2549019608, alpha: 1)
         }

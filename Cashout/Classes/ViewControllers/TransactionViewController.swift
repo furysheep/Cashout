@@ -130,8 +130,11 @@ class TransactionViewController: BaseViewController, UITextFieldDelegate {
     }
     
     private func updatePendingAfterPaymentAmount() {
-        let current = self.txtFieldCurrentPayment.text!.replacingOccurrences(of: ",", with: "")
-        let currentPayment = Float(current) ?? 0.0
+        let regex = try! NSRegularExpression(pattern: "[^0-9]", options: .caseInsensitive)
+        let text = self.txtFieldCurrentPayment.text!
+        let amountWithPrefix = regex.stringByReplacingMatches(in: text, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSMakeRange(0, text.count), withTemplate: "")
+        let double = (amountWithPrefix as NSString).floatValue / 100
+        let currentPayment = double
         let paid = self.selectedOrder.amount-self.selectedOrder.amountPending
         let pendingAfterPayment = SharedClass.shared.getFloatToThreeDigitFrom(number: (self.selectedOrder.amount-paid-currentPayment))
         self.lblPendingAfterPayment.text = "To have € ".localized()+"\(pendingAfterPayment)"
@@ -188,13 +191,13 @@ class TransactionViewController: BaseViewController, UITextFieldDelegate {
                 }
         
                 Constants.showLoader()
-                APIManager.shared.makeTransactionWith(orderId: self.selectedOrder.id, kind: self.strKind, payment:self.strPaymentMethod, bank: (self.txtFieldBank.text ?? ""), checkNumber: (self.txtFieldCheckNo.text ?? ""), price: txtFieldCurrentPayment!.text!) { (transactionResponse,success) in
+                APIManager.shared.makeTransactionWith(orderId: self.selectedOrder.id, kind: self.strKind, payment:self.strPaymentMethod, bank: (self.txtFieldBank.text ?? ""), checkNumber: (self.txtFieldCheckNo.text ?? ""), price: "\(txtFieldCurrentPayment!.text!.currentValue())") { (transactionResponse,success) in
                     Constants.hideLoader()
                     if success {
                         self.redirectToTransactionReceipt(transactionResponse: (transactionResponse?.original)!)
                     }
                     else {
-                        Constants.showAlert(message: "Please Retry")
+                        Constants.showAlert(message: "Please input lower amount".localized())
                     }
                 }
     }
@@ -242,14 +245,7 @@ extension String {
         formatter.maximumFractionDigits = 2
         formatter.minimumFractionDigits = 2
         
-        var amountWithPrefix = self
-        
-        // remove from String: "$", ".", ","
-        let regex = try! NSRegularExpression(pattern: "[^0-9]", options: .caseInsensitive)
-        amountWithPrefix = regex.stringByReplacingMatches(in: amountWithPrefix, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSMakeRange(0, self.count), withTemplate: "")
-        
-        let double = (amountWithPrefix as NSString).doubleValue
-        number = NSNumber(value: (double / 100))
+        number = NSNumber(value: currentValue())
         
         // if first number is 0 or all numbers were deleted
         guard number != 0 as NSNumber else {
@@ -257,5 +253,11 @@ extension String {
         }
         
         return formatter.string(from: number)!
+    }
+    
+    func currentValue() -> Double {
+        let regex = try! NSRegularExpression(pattern: "[^0-9]", options: .caseInsensitive)
+        let amountWithPrefix = regex.stringByReplacingMatches(in: self, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSMakeRange(0, self.count), withTemplate: "")
+        return (amountWithPrefix as NSString).doubleValue / 100
     }
 }

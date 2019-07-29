@@ -160,8 +160,7 @@ class APIManager {
         //            "storno_doc":"A1-34",
         //            "price":13
         //        }
-        let prc = price.replacingOccurrences(of: ",", with: "")
-        Alamofire.request(URL.init(string: Constants.endpoint+"/transaction/make")!, method: .post, parameters: ["order_id":orderId,"kind":kind,"payment":payment,"bank":bank,"check_number":checkNumber,"price":prc],encoding: JSONEncoding.default, headers: ["Content-Type": "application/json", "Authorization":(""+TokenManager.shared.userToken!)]).responseJSON { (serverResponse) in
+        Alamofire.request(URL.init(string: Constants.endpoint+"/transaction/make")!, method: .post, parameters: ["order_id":orderId,"kind":kind,"payment":payment,"bank":bank,"check_number":checkNumber,"price":price],encoding: JSONEncoding.default, headers: ["Content-Type": "application/json", "Authorization":(""+TokenManager.shared.userToken!)]).responseJSON { (serverResponse) in
             
             let responseCode = serverResponse.response?.statusCode
             if serverResponse.result.isSuccess, let data = serverResponse.data {
