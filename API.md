@@ -11,7 +11,7 @@ X-Requested-With: XMLHttpRequest
 
 Once logged in you will receive a response containing an `access_token`.
 
-For every request the header will have to cointain the `access_token` in the `Authorization` header prefixed by `Bearer` (+ space), like so:
+For every request the header will have to cointain the `access_token` in the `Authorization` header prefixed by `Bearer`, like so:
 ```
 Content-Type: application/json
 X-Requested-With: XMLHttpRequest
@@ -21,14 +21,13 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiL...F04wRJBVtRRoyrI6CVDBe1R6dU
 All data to be send are to be in `JSON` format.
 
 ## Login
-##### method: `POST`
 ##### url: `/login`
 
-##### JSON to send (body):
+##### JSON to send:
 ```json
 {
-	"email": "agente@dolciaria.it",
-	"password": "passwordtemporanea"
+  "email": "agente@dolciaria.it",
+  "password": "passwordtemporanea"
 }
 ```
 
@@ -42,7 +41,6 @@ All data to be send are to be in `JSON` format.
 ```
 
 ## Unauthorized
-##### method: `GET/POST`
 ##### url: `/*` (any url)
 - Every request to an existing `url` while not authenticated or with an expired token will return an "`Unauthenticated.`" message.
 
@@ -54,7 +52,6 @@ All data to be send are to be in `JSON` format.
 ```
 
 ## Errors
-##### method: `GET/POST`
 ##### url: `/*` (any url)
 - Every request to an existing or non-existing `url` returning an error will have an empty `message` and a populated `exception` string
 
@@ -65,11 +62,11 @@ All data to be send are to be in `JSON` format.
   "exception": "Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException",
   "file": "/Users/mrweb/Futurelabs/DEV/Laravel/cashout/vendor/laravel/framework/src/Illuminate/Routing/RouteCollection.php",
   "line": 179,
+  ...
 }
 ```
 
 ## Logout
-##### method: `POST`
 ##### url: `/logout`
 
 ##### Response:
@@ -79,13 +76,12 @@ All data to be send are to be in `JSON` format.
 }
 ```
 
-## List of Order
-- Returns the list of all order of the logged user + their customer data + the products of the order
+## Orders
+#### url: `/orders`
+- Returns a list of all Users's orders. 
 - If the user is an Admin the list will contain all of his Branch orders (branch_id)
 - If the user is a Super Admin will see all orders in the system
 
-##### method: `GET`
-#### url: `/orders`
 Order `status` possibilities:
 - `0`: Draft (Draft: does NOT have a registry_id set)
 - `0`: Open (Open: DOES HAVE a registry_id set)
@@ -98,58 +94,23 @@ The field `status_word` contains the status in words (Italian)
 ```json
 [
   {
-    "id": "45f20840-4015-11e9-bf47-d3f6a2fe1562",
-    "branch_id": 1,
-    "user_id": 1,
-    "registry_id": "246bf0f0-38ea-11e9-b132-cb9b976d607e",
-    "status": 1,
-    "discount": 1000,
+    "id": "string",
+    "branch_id": "int",
+    "user_id": "int",
+    "registry_id": "string",
+    "status": "int",
+    "discount": "int",
     "notes": null,
-    "created_at": "2019-03-06 14:39:32",
-    "updated_at": "2019-03-06 14:39:54",
-    "status_word": "Completato",
-    "customer": {
-      "id": "246bf0f0-38ea-11e9-b132-cb9b976d607e",
-      "branch_id": 1,
-      "user_id": 1,
-      "kind": "customer",
-      "fname": "Alice",
-      "lname": "Paris",
-      "CF": null,
-      "phone": null,
-      "email": null,
-      "address": "Via Cane, 12",
-      "city": null,
-      "zip": null,
-      "district": null,
-      "company": null,
-      "PIVA": null,
-      "created_at": "2019-02-25 11:43:09",
-      "updated_at": "2019-02-25 11:43:15"
-    },
-    "products": [
-      {
-        "id": "4a0292c0-4015-11e9-b5f5-9b3f7fc85e20",
-        "branch_id": 1,
-        "user_id": 1,
-        "order_id": "45f20840-4015-11e9-bf47-d3f6a2fe1562",
-        "name": "Casa",
-        "description": null,
-        "price": 150000,
-        "created_at": "2019-03-06 14:39:39",
-        "updated_at": "2019-03-06 14:39:50"
-      }
-    ]
-  }
+    "created_at": "datetime",
+    "updated_at": "datetime",
+    "status_word": "string"
+  },{...}
 ]
 ```
 
-## Single Order
-- Returns the list of all order of the logged user + their customer data + the products of the order
-
-##### method: `GET`
-#### url: `/order` (singular)
-##### body: `{"id":"the-order-id"}`
+## Single Order Data
+#### url: `/orders/{id}`
+- Returns a specific order by ID, with the corrisponding customer and products
 
 ##### Response:
 ```json
@@ -197,60 +158,17 @@ The field `status_word` contains the status in words (Italian)
         "updated_at": "2019-03-06 14:39:50"
       }
     ]
-  }
-]
-```
-
-## Customer Order List:
-- Returns a list of all customers' orders (by customer id)
-
-Admins will see their branch Users and Super Admins will see all Users.
-non-Admin and non-Super Admin will not access this resource
-##### method: `POST`
-##### url: `/customerorders`
-##### body: `{"id":"the-customer-id"}`
-
-##### Response:
-```json
-[
-  {
-    "id": "c6bdef60-4a6a-11e9-a387-318fdcd590f9",
-    "branch_id": 1,
-    "user_id": 1,
-    "registry_id": "acb9a2e0-45e3-11e9-864a-fd579f3bb4ca",
-    "status": 1,
-    "discount": 0,
-    "notes": null,
-    "created_at": "2019-03-19 18:16:47",
-    "updated_at": "2019-03-19 18:17:06",
-    "status_word": "Completato",
-    "total": 123
-  },
-  {
-    "id": "c6bdef60-4a6a-11e9-a387-318fdcd590fa",
-    "branch_id": 1,
-    "user_id": 1,
-    "registry_id": "acb9a2e0-45e3-11e9-864a-fd579f3bb4ca",
-    "status": 1,
-    "discount": 0,
-    "notes": null,
-    "created_at": "2019-03-19 18:16:47",
-    "updated_at": "2019-03-19 18:17:06",
-    "status_word": "Completato",
-    "total": 0
   }
 ]
 ```
 
 ## Customer List:
+Admins will see their branch Users and Super Admins will see all Users.
+non-Admin and non-Super Admin will not access this resource
+##### url: `/customers`
 - Returns a list of all customers of the logged User.
 - If the user is an Admin the list will contain all of his Branch customers (branch_id)
 - If the user is a Super Admin will see all customers in the system
-
-Admins will see their branch Users and Super Admins will see all Users.
-non-Admin and non-Super Admin will not access this resource
-##### method: `GET`
-##### url: `/customers`
 
 ##### Response:
 ```json
@@ -273,71 +191,32 @@ non-Admin and non-Super Admin will not access this resource
     "PIVA": null,
     "created_at": "2019-03-03 14:34:01",
     "updated_at": "2019-03-03 14:34:05"
-  }
+  },
+  {...}
 ]
 ```
 
-## Receipt:
-- Returns a receipt by order id
+## Make a Transaction:
+##### url: `/transaction/make`
+There are 3 types of transactions, that is the `kind` field sent:
 
-Admins will see their branch Users and Super Admins will see all Users.
-non-Admin and non-Super Admin will not access this resource
-##### method: `POST`
-##### url: `/receipt`
-##### body: `{"id":"the-order-id"}`
+1. `balance`: the full payment. If the order is 100 (either total or 100 still to be paid) and you pay 100 this payment closes the order.
+2. `advance`: payment which is not full. If the order has 30 euro left and you make a 10 eur it's an advance.
+3. `storno`: closes a payment before the whole sum is reached. I don't know the translation but it means the guy has a debt with you of 100 then you have a debt with him of 20 so "storno" means he pays 80 and you close the order because with the 20 you owe him you are now even. When this is send you have to send "storno_doc" as well which is a document number (String type)
 
-##### Response:
+If the `payment` can be either `cash` or `check`. In case is `check` the request has to have `bank` and `check_number` 
+
+The field `price` is the price paid.
+
+##### JSON request:
 ```json
 {
-  "id": "3e331230-4a73-11e9-bdb7-ed4735f702eb",
-  "order_id": "c6bdef60-4a6a-11e9-a387-318fdcd590fa",
-  "branch_id": 1,
-  "user_id": 1,
-  "price": 0,
-  "discount": 0,
-  "tax": 0,
-  "total": 0,
-  "printed": 0,
-  "created_at": "2019-03-19 19:17:23",
-  "updated_at": "2019-03-19 19:17:23",
-  "number": "3E331230",
-  "order_number": "C6BDEF60"
-}
-```
-
-## Update Order Status:
-- Returns a receipt by order id
-
-Admins will see their branch Users and Super Admins will see all Users.
-non-Admin and non-Super Admin will not access this resource
-
-##### method: `POST`
-##### url: `/updateorderstatus`
-##### body:
-```
-{
-  "id":String, #Order id
-  "status":Int, #1 = completed, 2 = cancelled
-  "complete":Bool, #true only for status 1
-}
-```
-
-##### Response:
-(Will return the receipt if appropriate or empty `{}` if cancelled)
-```json
-{
-  "id": "552d1db0-4a8f-11e9-a003-83dfcb7cd9ec",
-  "order_id": "bd7e9b60-45e3-11e9-9985-25b2cda7d9c5",
-  "branch_id": 1,
-  "user_id": 1,
-  "price": 260,
-  "discount": 13,
-  "tax": 57.2,
-  "total": 317.2,
-  "printed": 0,
-  "created_at": "2019-03-19 22:38:28",
-  "updated_at": "2019-03-19 22:38:28",
-  "number": "552D1DB0",
-  "order_number": "BD7E9B60"
+  "order_id": "351f8490-5c21-11e9-9b45-0f65e3249fbf",
+  "kind":"advance",
+  "payment":"cash",
+  "bank":"Bank Of America",
+  "check_number":"12367",
+  "storno_doc":"A1-34",
+  "price":13
 }
 ```

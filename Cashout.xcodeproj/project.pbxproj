@@ -667,7 +667,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 94K77D8385;
+				DEVELOPMENT_TEAM = 57D8JJF94D;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Cashout/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -678,7 +679,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Cashout/RegoSDK",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = demo.Cashout;
+				PRODUCT_BUNDLE_IDENTIFIER = gymia.Cashout;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Cashout/Cashout-Briding-Header.h";
 				SWIFT_VERSION = 4.2;
@@ -692,7 +693,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 94K77D8385;
+				DEVELOPMENT_TEAM = 57D8JJF94D;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Cashout/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -703,7 +705,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Cashout/RegoSDK",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = demo.Cashout;
+				PRODUCT_BUNDLE_IDENTIFIER = gymia.Cashout;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Cashout/Cashout-Briding-Header.h";
 				SWIFT_VERSION = 4.2;
