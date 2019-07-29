@@ -1161,6 +1161,7 @@
                         <outlet property="lblPendingAfterPayment" destination="Zby-Sb-jWV" id="3fZ-Nm-1s5"/>
                         <outlet property="lblStorno" destination="8KK-22-sKt" id="XVt-mz-Eoh"/>
                         <outlet property="lblTotalAmount" destination="JU2-Yp-3ak" id="5U5-nc-kvy"/>
+                        <outlet property="registerButton" destination="gO7-oF-mUz" id="So0-5k-ln7"/>
                         <outlet property="txtFieldBank" destination="EgM-mR-JGv" id="VtM-wB-T6x"/>
                         <outlet property="txtFieldCheckNo" destination="K4r-4F-t9O" id="5MV-8p-PHJ"/>
                         <outlet property="txtFieldCurrentPayment" destination="8Y4-NW-gWZ" id="2Zk-7H-eth"/>
