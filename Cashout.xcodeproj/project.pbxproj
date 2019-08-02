@@ -366,7 +366,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1000;
 				LastUpgradeCheck = 1000;
-				ORGANIZATIONNAME = demo;
+				ORGANIZATIONNAME = gymia;
 				TargetAttributes = {
 					32C149ED221333E40074CA9F = {
 						CreatedOnToolsVersion = 10.0;
