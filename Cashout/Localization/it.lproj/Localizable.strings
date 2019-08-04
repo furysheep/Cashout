@@ -76,7 +76,6 @@
 "item" = "voce";
 "Date" = "Data";
 "Transaction Amount Cannot be Blank" = "Ammontare Obbligatorio";
-"Advance" = "Advance";
 "Storno" = "Storno";
 "Kind" = "Kind";
 "Cash" = "Contanti";
@@ -85,3 +84,4 @@
 "Check No Cannot be Blank" = "Numero Assegno Obbligatorio";
 "Still to get: € " = "Ancora da Ricevere: € ";
 "Paid: € " = "Pagato: € ";
+"Wrong password" = "Password errata";

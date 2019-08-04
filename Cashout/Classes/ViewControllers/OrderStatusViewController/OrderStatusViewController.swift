@@ -21,6 +21,7 @@ class OrderStatusViewController: BaseViewController {
     
     var customerName = ""
     var selectedOrder = Order()
+    var selectedItem = Item()
     var selectedTrans = Transaction()
     
     var receiptImage: UIImage!
@@ -64,6 +65,7 @@ class OrderStatusViewController: BaseViewController {
                 if let vc = sb.instantiateViewController(withIdentifier: Constants.ViewControllerIdentifier.printViewController) as? PrintViewController {
                     vc.selectedOrder = self.selectedOrder
                     vc.selectedTrans = self.selectedTrans
+                    vc.selectedItem = self.selectedItem
                     //self.navigationController?.pushViewController(vc, animated: true)
                     self.printRecipt(viewController: vc)
                 }

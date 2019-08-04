@@ -91,8 +91,9 @@ class OrderDetailsViewController: BaseViewController,UITableViewDelegate,UITable
                         let commaSeperated = transDate.components(separatedBy:" ")
                         transDate = commaSeperated[0]
                     }
+                    var kind = (dict1["kind"]?.stringValue) ?? ""
                     
-                    let parsedTransaction = Transaction.init(transactionId: transId, number: transNo, transactionDate: transDate, price: transAmount, transactionType: Constants.getTransactionType(type: transType),chequeNo: transCheckNo,bank: transBank)
+                    let parsedTransaction = Transaction.init(transactionId: transId, number: transNo, transactionDate: transDate, price: transAmount, transactionType: Constants.getTransactionType(type: transType),chequeNo: transCheckNo,bank: transBank, kind: kind)
                     self.selectedOrder.Transactions.append(parsedTransaction)
                 }
             }
@@ -216,6 +217,7 @@ class OrderDetailsViewController: BaseViewController,UITableViewDelegate,UITable
             if let vc = sb.instantiateViewController(withIdentifier: Constants.ViewControllerIdentifier.orderStatusViewController) as? OrderStatusViewController {
                 vc.selectedTrans = self.selectedOrder.Transactions[indexPath.row]
                 vc.selectedOrder = self.selectedOrder
+                vc.selectedItem = self.selectedOrder.Items[0]
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         }

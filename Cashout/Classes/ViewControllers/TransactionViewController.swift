@@ -92,6 +92,12 @@ class TransactionViewController: BaseViewController, UITextFieldDelegate {
     
     
     @IBAction func checkKindMarkTapped(_ sender: UIButton) {
+        if (sender.isEqual(btnCheckBoxBalance)) {
+            let amountString = String(Int(self.selectedOrder.amountPending * 100)).currencyInputFormatting()
+            txtFieldCurrentPayment.text = amountString.trimmingCharacters(in:NSCharacterSet.whitespacesAndNewlines)
+            self.updatePendingAfterPaymentAmount()
+        }
+        
         UIView.animate(withDuration: 0.1, delay: 0.1, options: .curveLinear, animations: {
             sender.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
             
@@ -161,7 +167,7 @@ class TransactionViewController: BaseViewController, UITextFieldDelegate {
     func redirectToTransactionReceipt(transactionResponse:Original) {
         let sb = UIStoryboard(name: Constants.StoryBoard.homeSB, bundle: nil)
         if let vc = sb.instantiateViewController(withIdentifier: Constants.ViewControllerIdentifier.orderStatusViewController) as? OrderStatusViewController {
-            let currentTransaction = Transaction.init(transactionId: transactionResponse.id!, number: transactionResponse.number!, transactionDate: transactionResponse.createdAt!, price: Float(transactionResponse.price!), transactionType: transactionResponse.payment!, chequeNo: transactionResponse.checkNumber ?? "", bank: transactionResponse.bank ?? "")
+            let currentTransaction = Transaction.init(transactionId: transactionResponse.id!, number: transactionResponse.number!, transactionDate: transactionResponse.createdAt!, price: Float(transactionResponse.price!), transactionType: transactionResponse.payment!, chequeNo: transactionResponse.checkNumber ?? "", bank: transactionResponse.bank ?? "", kind: transactionResponse.kind ?? "")
             vc.selectedTrans = currentTransaction
             vc.selectedOrder = selectedOrder
             vc.currentUIState = .transactionCompleted

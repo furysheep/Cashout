@@ -23,7 +23,7 @@ extension String {
         static let strBlankEmail = "Email cannot be blank".localized()
         static let strInvalidEmail = "Enter a valid email address [Eg:abc@yahoo.com]".localized()
         static let strEmptyPassword = "Please enter password".localized()
-        
+        static let strWrongPassword = "Wrong password".localized()
     }
     static let strTransactionEmpty = "Transaction Amount Cannot be Blank".localized()
     static let strBankEmpty = "Bank Name Cannot be Blank".localized()

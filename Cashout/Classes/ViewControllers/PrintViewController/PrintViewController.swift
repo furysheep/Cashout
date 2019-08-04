@@ -19,8 +19,8 @@ class PrintViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     @IBOutlet weak var lblCheckNo: UILabel!
     @IBOutlet weak var lblSellerNameAddress: UILabel!
     @IBOutlet weak var lblAgentCode: UILabel!
+    @IBOutlet weak var lblDesc: UILabel!
     
-    @IBOutlet weak var viewHeader: UIView!
     @IBOutlet weak var tblViewPrint: UITableView!
     @IBOutlet weak var lblPrint: UILabel!
     @IBOutlet weak var tableHeightConstraint: NSLayoutConstraint!
@@ -28,6 +28,7 @@ class PrintViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     
     var selectedOrder = Order()
     var selectedTrans = Transaction()
+    var selectedItem = Item()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +37,20 @@ class PrintViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         self.setUI()
         
     }
+    
+//    override func viewWillLayoutSubviews() {
+//        super.viewWillLayoutSubviews()
+//        let header = tblViewPrint.tableHeaderView!
+//        header.setNeedsUpdateConstraints()
+//        header.updateConstraintsIfNeeded()
+//        header.frame = CGRect(x: 0, y: 0, width: tblViewPrint.tableHeaderView!.bounds.size.width, height: CGFloat.greatestFiniteMagnitude)
+//        var newFrame = header.frame
+//        header.setNeedsLayout()
+//        header.layoutIfNeeded()
+//        let newSize = header.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+//        newFrame.size.height = newSize.height
+//        header.frame = newFrame
+//    }
     
     override func viewDidLayoutSubviews() {
         view.bounds = CGRect(x: 0, y: 0, width: view.bounds.width, height: lastView.frame.origin.y + lastView.frame.size.height + 50)
@@ -46,16 +61,18 @@ class PrintViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         self.lblDate.text = String.init(format: "%@: %@", "Date".localized(),self.selectedTrans.transactionDate.split(separator: "-").reversed().joined(separator: "/"))
         self.lblOrder.text = String(format: "%@%@", "Order #".localized(),self.selectedOrder.number)
         self.lblTransaction.text = String.init(format: "%@%@", "Transaction #".localized(),self.selectedTrans.number)
-        self.lblRecipient.text = String.init(format: "%@\n%@", "Recipient:".localized(),SharedClass.shared.currentSelectedCustomer.address)
-        self.lblThisTransaction.text = "This transaction:".localized() + "\n\(self.selectedTrans.price) €"
+        self.lblRecipient.text = String.init(format: "%@\n%@\n%@", "Recipient:".localized(), SharedClass.shared.currentSelectedCustomer.companyName, SharedClass.shared.currentSelectedCustomer.address)
+        self.lblThisTransaction.text = "This transaction:".localized() + "\n\(self.selectedTrans.price) €  (\(self.selectedTrans.kind.capitalized.localized()))"
         self.lblPaymentMethod.text = String.init(format: "%@\n%@", "Payment method:".localized(),self.selectedTrans.transactionType)
-        self.lblBank.text = String.init(format: "%@: %@", "Bank".localized(),self.selectedTrans.bank)
+        self.lblBank.text = String.init(format: "%@: %@", "Bank".localized(), self.selectedTrans.bank.localized())
         self.lblComments.text = String.init(format: "%@\n%@", "Comments/Notes".localized(),self.selectedOrder.note.trimSpace() == "" ? "no note".localized() : self.selectedOrder.note)
         self.lblCheckNo.text = String.init(format: "%@: %@", "Check".localized(),self.selectedTrans.chequeNo)
         self.lblSellerNameAddress.text = self.computeSellerDetails()
         self.lblAgentCode.text = String.init(format: "%@ %@", "Agent:".localized(),(UserManager.shared.loggedInUser?.agentCode)!)
         self.tblViewPrint.setNeedsLayout()
         self.tblViewPrint.layoutIfNeeded()
+        
+        self.lblDesc.text = selectedItem.itemDescription
         
         let dateFormatter : DateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss"
@@ -72,7 +89,7 @@ class PrintViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         let sellerDetail = """
         \((UserManager.shared.loggedInUser?.company?.first?.name!)!)
         \((UserManager.shared.loggedInUser?.company?.first?.completeAddress)!)
-        \("P.IVA:".localized())\((UserManager.shared.loggedInUser?.company?.first?.pIVA)!)\n\("CF: ".localized())\((UserManager.shared.loggedInUser?.company?.first?.cF)!)
+        \("P.IVA:".localized())\(UserManager.shared.loggedInUser?.company?.first?.pIVA ?? "")\n\("CF: ".localized())\(UserManager.shared.loggedInUser?.company?.first?.cF ?? "")
         """
         return sellerDetail
     }

@@ -84,19 +84,21 @@ class UserManager {
                 
                 if responseCode == 401 {
                     // logout user
-                }
-                do {
-                    // Decode data to object
-                    let jsonDecoder = JSONDecoder()
-                    let user = try jsonDecoder.decode(User.self, from: data)
-                    let headerToken = ("Bearer \(user.accessToken!)")
-                    print("token : \(headerToken)")
-                    TokenManager.shared.setToken(token: headerToken)
-                    self!.setUser(user:user)
-                    completion(true)
-                }
-                catch {
                     completion(false)
+                } else {
+                    do {
+                        // Decode data to object
+                        let jsonDecoder = JSONDecoder()
+                        let user = try jsonDecoder.decode(User.self, from: data)
+                        let headerToken = ("Bearer \(user.accessToken!)")
+                        print("token : \(headerToken)")
+                        TokenManager.shared.setToken(token: headerToken)
+                        self!.setUser(user:user)
+                        completion(true)
+                    }
+                    catch {
+                        completion(false)
+                    }
                 }
                 
             }

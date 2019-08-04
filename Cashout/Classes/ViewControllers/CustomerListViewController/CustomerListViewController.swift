@@ -26,6 +26,21 @@ class CustomerListViewController: UIViewController,UITableViewDelegate,UITableVi
             self.parser(arr: result!)
         }
         
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action:  #selector(getCustomers), for: .valueChanged)
+        tblViewCustomers.refreshControl = refreshControl
+    }
+    
+    @objc func getCustomers() {
+        searchBar.text = ""
+        searchActive = false
+        arrClientList.removeAll()
+        self.tblViewCustomers.reloadData()
+        APIManager.shared.getCustomersList { (result) in
+            self.parser(arr: result!)
+            self.tblViewCustomers.reloadData()
+            self.tblViewCustomers.refreshControl?.endRefreshing()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -102,7 +117,11 @@ class CustomerListViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.redirectToCustomerDetails(customer: self.arrClientList[indexPath.row])
+        if (searchActive){
+            self.redirectToCustomerDetails(customer: self.arrSearchResults![indexPath.row])
+        } else {
+            self.redirectToCustomerDetails(customer: self.arrClientList[indexPath.row])
+        }
     }
     
     // MARK: Search bar delegates
@@ -116,11 +135,11 @@ class CustomerListViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        searchActive = true;
+        searchActive = searchBar.text!.count > 0
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        searchActive = false;
+        searchActive = searchBar.text!.count > 0
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {

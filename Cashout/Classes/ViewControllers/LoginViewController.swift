@@ -69,6 +69,8 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                 Constants.hideLoader()
                 if (success) {
                     self.redirectToHome()
+                } else {
+                    Constants.showAlert(message: String.LoginErrorMessages.strWrongPassword)
                 }
             }
         }

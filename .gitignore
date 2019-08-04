@@ -3,3 +3,4 @@
 *.xcuserstate
 ._*
 /Cashout.xcodeproj/xcuserdata
+*.xcbkptlist
