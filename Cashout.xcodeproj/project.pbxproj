@@ -53,6 +53,8 @@
 		B2F1590F22E897FC0024459C /* RegoPrinterSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F1590E22E897FC0024459C /* RegoPrinterSelectViewController.swift */; };
 		B2F1591122E8CA020024459C /* common.xml in Resources */ = {isa = PBXBuildFile; fileRef = B2F1591022E8CA020024459C /* common.xml */; };
 		B60770FC4FC8D467C039F0DB /* Pods_Cashout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F1388E9B02CD36190C5400 /* Pods_Cashout.framework */; };
+		DF0C95AC22FFE14000EFEC41 /* Credit.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0C95AB22FFE14000EFEC41 /* Credit.swift */; };
+		DF0C95AE2300269F00EFEC41 /* CreditPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0C95AD2300269F00EFEC41 /* CreditPickerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -116,6 +118,8 @@
 		B2F1590E22E897FC0024459C /* RegoPrinterSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegoPrinterSelectViewController.swift; sourceTree = "<group>"; };
 		B2F1591022E8CA020024459C /* common.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = common.xml; sourceTree = "<group>"; };
 		D0447120112969A6840DD91E /* Pods-Cashout.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cashout.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Cashout/Pods-Cashout.debug.xcconfig"; sourceTree = "<group>"; };
+		DF0C95AB22FFE14000EFEC41 /* Credit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credit.swift; sourceTree = "<group>"; };
+		DF0C95AD2300269F00EFEC41 /* CreditPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditPickerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +147,7 @@
 				32624A3A2289DD68003CD2D4 /* Original.swift */,
 				32E414002286A7D800351E21 /* User.swift */,
 				32E414022286A7DD00351E21 /* Company.swift */,
+				DF0C95AB22FFE14000EFEC41 /* Credit.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -238,6 +243,7 @@
 				327584DE2214489F00AC6590 /* LoginViewController.swift */,
 				32AA231F22590B4B00AFAA44 /* TransactionViewController.swift */,
 				32E73B712280B1290027B11F /* PrintViewController */,
+				DF0C95AD2300269F00EFEC41 /* CreditPickerViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -472,6 +478,7 @@
 				32E73B702280A9BA0027B11F /* PrintViewController.swift in Sources */,
 				327584DA22140CF500AC6590 /* Extensions.swift in Sources */,
 				3243F7A722185DDB00ECBC42 /* CustomerViewController.swift in Sources */,
+				DF0C95AC22FFE14000EFEC41 /* Credit.swift in Sources */,
 				3243F7B12218B8C500ECBC42 /* OrderDetailsViewController.swift in Sources */,
 				B2F1590B22E8967C0024459C /* DropDownListView.m in Sources */,
 				32AA231E2258729F00AFAA44 /* Transaction.swift in Sources */,
@@ -482,6 +489,7 @@
 				32624A3B2289DD68003CD2D4 /* Original.swift in Sources */,
 				322FB4F9221DF01C0094311F /* Customer.swift in Sources */,
 				321D4620221F30B00009493B /* Item.swift in Sources */,
+				DF0C95AE2300269F00EFEC41 /* CreditPickerViewController.swift in Sources */,
 				3243F7B622192FDB00ECBC42 /* OrderStatusViewController.swift in Sources */,
 				32E414052286AD0B00351E21 /* UserManager.swift in Sources */,
 				322FB4F7221DD4980094311F /* String.swift in Sources */,

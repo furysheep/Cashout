@@ -38,6 +38,7 @@ class Constants {
     struct TableViewCellIdentifier {
         static let customerTableViewCellIdentifier = "CustomerTableViewCell"
         static let orderTableViewCellIdentifier = "OrderTableViewCell"
+        static let creditTableViewCellIdentifier = "CreditTableViewCell"
         static let articlesTableViewCellIdentifier = "ArticlesTableViewCell"
          static let printTableViewCellIdentifier = "PrintTableViewCell"
     }

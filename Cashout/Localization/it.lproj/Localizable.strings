@@ -72,7 +72,7 @@
 "Notes" = "Note";
 "Paid" = "Pagato";
 "Still to get" = "Ancora da Ricevere";
-"Order #" = "Ordine #";
+"Order #" = "Partita #";
 "item" = "voce";
 "Date" = "Data";
 "Transaction Amount Cannot be Blank" = "Ammontare Obbligatorio";

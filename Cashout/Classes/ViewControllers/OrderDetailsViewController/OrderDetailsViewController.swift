@@ -23,6 +23,7 @@ class OrderDetailsViewController: BaseViewController,UITableViewDelegate,UITable
     
     private let buttonBar = UIView()
     var selectedOrder = Order()
+    var arrCredits = [Credit]()
     var companyName = ""
     
     override func viewDidLoad() {
@@ -87,13 +88,14 @@ class OrderDetailsViewController: BaseViewController,UITableViewDelegate,UITable
                     let transCheckNo = (dict1["check_number"]?.stringValue) ?? ""
                     let transAmount = (dict1["price"]?.floatValue) ?? 0.00
                     var transDate = (dict1["created_at"]?.stringValue) ?? ""
+                    let notes = (dict1["notes"]?.stringValue) ?? ""
                     if !transDate.isEmpty {
                         let commaSeperated = transDate.components(separatedBy:" ")
                         transDate = commaSeperated[0]
                     }
-                    var kind = (dict1["kind"]?.stringValue) ?? ""
+                    let kind = (dict1["kind"]?.stringValue) ?? ""
                     
-                    let parsedTransaction = Transaction.init(transactionId: transId, number: transNo, transactionDate: transDate, price: transAmount, transactionType: Constants.getTransactionType(type: transType),chequeNo: transCheckNo,bank: transBank, kind: kind)
+                    let parsedTransaction = Transaction.init(transactionId: transId, number: transNo, transactionDate: transDate, price: transAmount, transactionType: Constants.getTransactionType(type: transType),chequeNo: transCheckNo,bank: transBank, kind: kind, notes: notes)
                     self.selectedOrder.Transactions.append(parsedTransaction)
                 }
             }
@@ -236,6 +238,7 @@ class OrderDetailsViewController: BaseViewController,UITableViewDelegate,UITable
         let sb = UIStoryboard(name: Constants.StoryBoard.homeSB, bundle: nil)
         if let vc = sb.instantiateViewController(withIdentifier: Constants.ViewControllerIdentifier.transactionViewController) as? TransactionViewController {
             vc.selectedOrder = self.selectedOrder
+            vc.arrCredits = arrCredits
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

@@ -14,8 +14,8 @@
 /* Class = "UISegmentedControl"; 4jk-yH-7N6.segmentTitles[1] = "COMPLETE"; ObjectID = "4jk-yH-7N6"; */
 "4jk-yH-7N6.segmentTitles[1]" = "COMPLETATE";
 
-/* Class = "UISegmentedControl"; 4jk-yH-7N6.segmentTitles[2] = "CANCELED"; ObjectID = "4jk-yH-7N6"; */
-"4jk-yH-7N6.segmentTitles[2]" = "ANNULLATE";
+/* Class = "UISegmentedControl"; 4jk-yH-7N6.segmentTitles[2] = "CREDIT"; ObjectID = "4jk-yH-7N6"; */
+"4jk-yH-7N6.segmentTitles[2]" = "CREDITI";
 
 /* Class = "UILabel"; text = "TRANSACTION SETTINGS"; ObjectID = "5G3-2h-S6m"; */
 "5G3-2h-S6m.text" = "IMPOSTAZIONI TRANSAZIONE";
@@ -132,7 +132,7 @@
 "sbP-rA-3b7.text" = "Acconto";
 
 /* Class = "UILabel"; text = "Check"; ObjectID = "sqH-Gc-Oyw"; */
-"sqH-Gc-Oyw.text" = "Assegno";
+"sqH-Gc-Oyw.text" = "Assegno/Cambiale";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "tvl-OP-VV9"; */
 "tvl-OP-VV9.text" = "Etichetta";

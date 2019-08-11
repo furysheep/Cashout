@@ -65,7 +65,7 @@ class PrintViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         self.lblThisTransaction.text = "This transaction:".localized() + "\n\(self.selectedTrans.price) €  (\(self.selectedTrans.kind.capitalized.localized()))"
         self.lblPaymentMethod.text = String.init(format: "%@\n%@", "Payment method:".localized(),self.selectedTrans.transactionType)
         self.lblBank.text = String.init(format: "%@: %@", "Bank".localized(), self.selectedTrans.bank.localized())
-        self.lblComments.text = String.init(format: "%@\n%@", "Comments/Notes".localized(),self.selectedOrder.note.trimSpace() == "" ? "no note".localized() : self.selectedOrder.note)
+        self.lblComments.text = String.init(format: "%@\n%@", "Comments/Notes".localized(),self.selectedTrans.notes.trimSpace() == "" ? "no note".localized() : self.selectedTrans.notes)
         self.lblCheckNo.text = String.init(format: "%@: %@", "Check".localized(),self.selectedTrans.chequeNo)
         self.lblSellerNameAddress.text = self.computeSellerDetails()
         self.lblAgentCode.text = String.init(format: "%@ %@", "Agent:".localized(),(UserManager.shared.loggedInUser?.agentCode)!)

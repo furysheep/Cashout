@@ -36,4 +36,8 @@ class OrderTableViewCell: UITableViewCell {
         self.lblOrderAmount.text = "€ " + "\(order.amount)"
     }
     
+    func configure(credit:Credit) {
+        self.lblOrderNo.text = String(format: "(%@) - %@ %@", credit.n_doc, credit.name_doc, credit.date_doc_ita)
+        self.lblOrderAmount.text = "€ " + "\(credit.avere)"
+    }
 }

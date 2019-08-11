@@ -5,10 +5,10 @@
 
 import UIKit
 
-class TransactionViewController: BaseViewController, UITextFieldDelegate {
+class TransactionViewController: BaseViewController, UITextFieldDelegate, CreditPickerViewControllerDelegate {
     
     @IBOutlet weak var lblPaymentMethod: UILabel!
-    private var strPaymentMethod:String = "Cash"
+    private var strPaymentMethod:String = ""
     @IBOutlet weak var btnCheckBoxCash:UIButton!
     @IBOutlet weak var lblCash: UILabel!
     @IBOutlet weak var btnCheckBoxCheck:UIButton!
@@ -18,7 +18,7 @@ class TransactionViewController: BaseViewController, UITextFieldDelegate {
     @IBOutlet weak var lblCheckNo: UILabel!
     @IBOutlet weak var txtFieldCheckNo:UITextField!
     @IBOutlet weak var lblKind: UILabel!
-    private var strKind:String = "advance"
+    private var strKind:String = ""
     @IBOutlet weak var btnCheckBoxBalance:UIButton!
     @IBOutlet weak var lblBalance:UILabel!
     @IBOutlet weak var btnCheckBoxAdvance:UIButton!
@@ -37,14 +37,19 @@ class TransactionViewController: BaseViewController, UITextFieldDelegate {
     @IBOutlet weak var registerButton: UIButton!
     
     var selectedOrder = Order()
+    var arrCredits = [Credit]()
+    var selectedCredit: Credit?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.setUIData ()
         self.updatePendingAfterPaymentAmount()
-        self.btnCheckBoxCash.isSelected = true
-        self.btnCheckBoxAdvance.isSelected = true
+        
+        registerButton.isEnabled = false
+        registerButton.backgroundColor = UIColor.lightGray
+//        self.btnCheckBoxCash.isSelected = true
+//        self.btnCheckBoxAdvance.isSelected = true
     }
     
     private func setUIData () {
@@ -72,20 +77,19 @@ class TransactionViewController: BaseViewController, UITextFieldDelegate {
             
         }) { (success) in
             UIView.animate(withDuration: 0.2, delay: 0.1, options: .curveLinear, animations: {
+                sender.isSelected = true
+                sender.transform = .identity
                 if (sender == self.btnCheckBoxCheck) {
-                    sender.isSelected = !sender.isSelected
-                    sender.transform = .identity
-                    self.btnCheckBoxCash.isSelected = !self.btnCheckBoxCash.isSelected
+                    self.btnCheckBoxCash.isSelected = false
                     self.btnCheckBoxCash.transform = .identity
-                    self.strPaymentMethod = "Check".localized()
+                    self.strPaymentMethod = "Check"
                 }
                 else {
-                    sender.isSelected = !sender.isSelected
-                    sender.transform = .identity
-                    self.btnCheckBoxCheck.isSelected = !self.btnCheckBoxCheck.isSelected
+                    self.btnCheckBoxCheck.isSelected = false
                     self.btnCheckBoxCheck.transform = .identity
-                    self.strPaymentMethod = "Cash".localized()
+                    self.strPaymentMethod = "Cash"
                 }
+                self.updatePendingAfterPaymentAmount()
             }, completion: nil)
         }
     }
@@ -111,6 +115,7 @@ class TransactionViewController: BaseViewController, UITextFieldDelegate {
                     self.btnCheckBoxStorno.isSelected = false
                     self.btnCheckBoxStorno.transform = .identity
                     self.strKind = "balance"
+                    self.selectedCredit = nil
                 }
                 else if (sender == self.btnCheckBoxAdvance) {
                     sender.isSelected = true
@@ -120,17 +125,24 @@ class TransactionViewController: BaseViewController, UITextFieldDelegate {
                     self.btnCheckBoxStorno.isSelected = false
                     self.btnCheckBoxStorno.transform = .identity
                     self.strKind = "advance"
+                    self.selectedCredit = nil
                 }
                 else {
-                    sender.isSelected = true
                     sender.transform = .identity
-                    self.btnCheckBoxAdvance.isSelected = false
-                    self.btnCheckBoxAdvance.transform = .identity
-                    self.btnCheckBoxBalance.isSelected = false
-                    self.btnCheckBoxBalance.transform = .identity
-                    self.strKind = "storno"
-                    
+                    let creditPicker = self.storyboard!.instantiateViewController(withIdentifier: "CreditPickerViewController") as! CreditPickerViewController
+                    let navVC = UINavigationController(rootViewController: creditPicker)
+                    creditPicker.delegate = self
+                    creditPicker.arrCredits = self.arrCredits
+                    creditPicker.title = "Seleziona Documento di Storno"
+                    navVC.modalPresentationStyle = .popover
+                    navVC.popoverPresentationController?.sourceView = self.btnCheckBoxStorno
+                    navVC.preferredContentSize = CGSize(width: 600, height: 600)
+                    navVC.navigationBar.isTranslucent = false
+
+//                    alert.popoverPresentationController?.permittedArrowDirections = .right
+                    self.present(navVC, animated: true, completion: nil)
                 }
+                self.updatePendingAfterPaymentAmount()
             }, completion: nil)
         }
     }
@@ -144,10 +156,13 @@ class TransactionViewController: BaseViewController, UITextFieldDelegate {
         let paid = self.selectedOrder.amount-self.selectedOrder.amountPending
         let pendingAfterPayment = SharedClass.shared.getFloatToThreeDigitFrom(number: (self.selectedOrder.amount-paid-currentPayment))
         self.lblPendingAfterPayment.text = "To have € ".localized()+"\(pendingAfterPayment)"
+        
         if (pendingAfterPayment >= 0) {
             txtFieldCurrentPayment.textColor = UIColor.black
-            registerButton.isEnabled = true
-            registerButton.backgroundColor = UIColor(red: 0, green: 140/255, blue: 65/255, alpha: 1)
+            if (strPaymentMethod != "" && strKind != "") {
+                registerButton.isEnabled = true
+                registerButton.backgroundColor = UIColor(red: 0, green: 140/255, blue: 65/255, alpha: 1)
+            }
         } else {
             txtFieldCurrentPayment.textColor = UIColor.red
             registerButton.isEnabled = false
@@ -167,7 +182,7 @@ class TransactionViewController: BaseViewController, UITextFieldDelegate {
     func redirectToTransactionReceipt(transactionResponse:Original) {
         let sb = UIStoryboard(name: Constants.StoryBoard.homeSB, bundle: nil)
         if let vc = sb.instantiateViewController(withIdentifier: Constants.ViewControllerIdentifier.orderStatusViewController) as? OrderStatusViewController {
-            let currentTransaction = Transaction.init(transactionId: transactionResponse.id!, number: transactionResponse.number!, transactionDate: transactionResponse.createdAt!, price: Float(transactionResponse.price!), transactionType: transactionResponse.payment!, chequeNo: transactionResponse.checkNumber ?? "", bank: transactionResponse.bank ?? "", kind: transactionResponse.kind ?? "")
+            let currentTransaction = Transaction.init(transactionId: transactionResponse.id!, number: transactionResponse.number!, transactionDate: transactionResponse.createdAt!, price: Float(transactionResponse.price!), transactionType: transactionResponse.payment!, chequeNo: transactionResponse.checkNumber ?? "", bank: transactionResponse.bank ?? "", kind: transactionResponse.kind ?? "", notes: transactionResponse.notes ?? "")
             vc.selectedTrans = currentTransaction
             vc.selectedOrder = selectedOrder
             vc.currentUIState = .transactionCompleted
@@ -197,7 +212,7 @@ class TransactionViewController: BaseViewController, UITextFieldDelegate {
                 }
         
                 Constants.showLoader()
-                APIManager.shared.makeTransactionWith(orderId: self.selectedOrder.id, kind: self.strKind, payment:self.strPaymentMethod, bank: (self.txtFieldBank.text ?? ""), checkNumber: (self.txtFieldCheckNo.text ?? ""), price: "\(txtFieldCurrentPayment!.text!.currentValue())") { (transactionResponse,success) in
+        APIManager.shared.makeTransactionWith(orderId: self.selectedOrder.id, kind: self.strKind, payment:self.strPaymentMethod, bank: (self.txtFieldBank.text ?? ""), checkNumber: (self.txtFieldCheckNo.text ?? ""), price: "\(txtFieldCurrentPayment!.text!.currentValue())", notes: txtFieldNotes.text ?? "", credit: selectedCredit) { (transactionResponse,success) in
                     Constants.hideLoader()
                     if success {
                         self.redirectToTransactionReceipt(transactionResponse: (transactionResponse?.original)!)
@@ -236,7 +251,21 @@ class TransactionViewController: BaseViewController, UITextFieldDelegate {
         return numberFormatter.string(from: NSNumber(value: amount))!
     }
     
-    
+    func pickCredit(_ credit: Credit) {
+        btnCheckBoxStorno.isSelected = true
+        btnCheckBoxStorno.transform = .identity
+        btnCheckBoxAdvance.isSelected = false
+        btnCheckBoxAdvance.transform = .identity
+        btnCheckBoxBalance.isSelected = false
+        btnCheckBoxBalance.transform = .identity
+        strKind = "storno"
+        
+        selectedCredit = credit
+        
+        let amountString = String(Int(credit.avere * 100)).currencyInputFormatting()
+        txtFieldCurrentPayment.text = amountString.trimmingCharacters(in:NSCharacterSet.whitespacesAndNewlines)
+        self.updatePendingAfterPaymentAmount()
+    }
 }
 
 extension String {

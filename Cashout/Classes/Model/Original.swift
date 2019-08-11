@@ -20,6 +20,7 @@ struct Original : Codable {
     let statusWord : String?
     let stornoDoc : String?
     let updatedAt : String?
+    let notes : String?
     let userId : Int?
     
     
@@ -38,6 +39,7 @@ struct Original : Codable {
         case statusWord = "status_word"
         case stornoDoc = "storno_doc"
         case updatedAt = "updated_at"
+        case notes = "notes"
         case userId = "user_id"
     }
     init(from decoder: Decoder) throws {
@@ -56,6 +58,7 @@ struct Original : Codable {
         statusWord = try values.decodeIfPresent(String.self, forKey: .statusWord)
         stornoDoc = try values.decodeIfPresent(String.self, forKey: .stornoDoc)
         updatedAt = try values.decodeIfPresent(String.self, forKey: .updatedAt)
+        notes = try values.decodeIfPresent(String.self, forKey: .notes)
         userId = try values.decodeIfPresent(Int.self, forKey: .userId)
     }
 }

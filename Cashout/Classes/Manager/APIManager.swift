@@ -82,6 +82,40 @@ class APIManager {
         
     }
     
+    func makeGetCallWithAlamofireCredits(id: String, completion: @escaping ([JSON]?,Bool) -> Void) {
+        let todoEndpoint: String = "https://www.cashout.credit/api/credits/\(id)"
+        Alamofire.request(URL.init(string: todoEndpoint)!, method: .get, parameters: nil,encoding: JSONEncoding.default, headers: ["Content-Type": "application/json", "Authorization":(""+TokenManager.shared.userToken!)]).responseJSON { serverResponse in
+            
+            let responseCode = serverResponse.response?.statusCode
+            if serverResponse.result.isSuccess, let data = serverResponse.data {
+                SharedClass.shared.logMsg("---------------------------------------------------------------")
+                //logMsg("Request......\n\(block.request)\nURL = \(completeUrl)")
+                SharedClass.shared.logMsg("Response......\n" + (String.init(bytes: data, encoding: .utf8) ?? "-"))
+                SharedClass.shared.logMsg("---------------------------------------------------------------")
+                if responseCode == 401 {
+                    // logout user
+                }
+                
+                guard let json = try? JSON(data: data) else {
+                    completion(nil,false)
+                    return
+                }
+                
+                if let arr:[JSON] = json["credits"].arrayValue {
+                    completion(arr,true)
+                }
+                else {
+                    completion(nil,false)
+                }
+                
+            }
+            else {
+                completion(nil,false)
+            }
+        }
+        
+    }
+    
     
     func makeGetCallWithAlamofireOrder(id: String, completion: @escaping ([JSON]?,Bool) -> Void) {
         let todoEndpoint: String = "https://www.cashout.credit/api/order"
@@ -149,7 +183,7 @@ class APIManager {
         }
     }
     
-    func makeTransactionWith(orderId:String, kind:String, payment:String,bank:String, checkNumber:String,price:String,completion: @escaping (TransactionResponseData?,Bool) -> Void) {
+    func makeTransactionWith(orderId:String, kind:String, payment:String,bank:String, checkNumber:String,price:String, notes: String, credit: Credit?, completion: @escaping (TransactionResponseData?,Bool) -> Void) {
         
         //        {
         //            "order_id": "351f8490-5c21-11e9-9b45-0f65e3249fbf",
@@ -160,7 +194,14 @@ class APIManager {
         //            "storno_doc":"A1-34",
         //            "price":13
         //        }
-        Alamofire.request(URL.init(string: Constants.endpoint+"/transaction/make")!, method: .post, parameters: ["order_id":orderId,"kind":kind,"payment":payment,"bank":bank,"check_number":checkNumber,"price":price],encoding: JSONEncoding.default, headers: ["Content-Type": "application/json", "Authorization":(""+TokenManager.shared.userToken!)]).responseJSON { (serverResponse) in
+        var params = ["order_id":orderId,"kind":kind,"payment":payment,"bank":bank,"check_number":checkNumber,"price":price, "notes": notes] as [String: Any]
+        if let credit = credit {
+            params["storno_id"] = credit.storno_id
+            params["n_doc"] = credit.n_doc
+            params["date_doc"] = credit.date_doc
+            params["name_doc"] = credit.name_doc
+        }
+        Alamofire.request(URL.init(string: Constants.endpoint+"/transaction/make")!, method: .post, parameters: params,encoding: JSONEncoding.default, headers: ["Content-Type": "application/json", "Authorization":(""+TokenManager.shared.userToken!)]).responseJSON { (serverResponse) in
             
             let responseCode = serverResponse.response?.statusCode
             if serverResponse.result.isSuccess, let data = serverResponse.data {

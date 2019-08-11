@@ -20,7 +20,6 @@ class Order: Object {
     @objc private(set) dynamic var itemCount = 0
     @objc private(set) dynamic var amount:Float = 0.0
     @objc private(set) dynamic var amountPending:Float = 0.0
-    @objc private(set) dynamic var note = ""
     
     let Items = List<Item>()
     let Transactions = List<Transaction>()
@@ -31,7 +30,7 @@ class Order: Object {
         set { status = newValue.rawValue }
     }
     
-    convenience init(id : String, number: String, status : orderStatus, itemCount : Int = 0, amount : Float, amountPending:Float,note : String) {
+    convenience init(id : String, number: String, status : orderStatus, itemCount : Int = 0, amount : Float, amountPending:Float) {
         self.init()
         self.id = id
         self.number = number
@@ -39,7 +38,6 @@ class Order: Object {
         self.itemCount = itemCount
         self.amount = amount
         self.amountPending = amountPending
-        self.note = note
     }
     
 }

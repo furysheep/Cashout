@@ -20,13 +20,14 @@ class CustomerViewController: BaseViewController,UITableViewDelegate,UITableView
     @IBOutlet weak var lblPIVA: UILabel!
     @IBOutlet weak var lblCF: UILabel!
     @IBOutlet weak var lblSID: UILabel!
+    @IBOutlet weak var tableHeight: NSLayoutConstraint!
     
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var tblViewOrders: UITableView!
     
     private var arrOpenOrderList = [Order]()
     private var arrCompletedOrderList = [Order]()
-    private var arrCancelledOrderList = [Order]()
+    private var arrCredits = [Credit]()
     
     let buttonBar = UIView()
     var selectedCustomer = Customer()
@@ -58,9 +59,20 @@ class CustomerViewController: BaseViewController,UITableViewDelegate,UITableView
         super.viewWillAppear(animated)
         Constants.showLoader()
         APIManager.shared.makeGetCallWithAlamofireCustomerOrders(id: self.selectedCustomer.id) { (result,success) in
-            Constants.hideLoader()
             if success {
                 self.parser(arr: result!)
+            }
+        }
+        
+        APIManager.shared.makeGetCallWithAlamofireCredits(id: self.selectedCustomer.id) { (result,success) in
+            Constants.hideLoader()
+            if success {
+                if let credits = result {
+                    for each in credits {
+                        self.arrCredits.append(Credit(storno_id: each["storno_id"].int64Value, n_doc: each["n_doc"].stringValue, name_doc: each["name_doc"].stringValue, date_doc: each["date_doc"].stringValue, date_doc_ita: each["date_doc_ita"].stringValue, avere: each["avere"].floatValue))
+//                        let dict = each.dictionaryValue
+                    }
+                }
             }
         }
     }
@@ -73,7 +85,7 @@ class CustomerViewController: BaseViewController,UITableViewDelegate,UITableView
         self.selectedCustomer.orders.removeAll()
         self.arrOpenOrderList.removeAll()
         self.arrCompletedOrderList.removeAll()
-        self.arrCancelledOrderList.removeAll()
+        self.arrCredits.removeAll()
     }
     
     private func parser(arr:[JSON]) {
@@ -100,11 +112,10 @@ class CustomerViewController: BaseViewController,UITableViewDelegate,UITableView
             
             let orderId = (dict["id"]?.stringValue) ?? ""
             let orderNumber = (dict["order_number"]?.stringValue) ?? ""
-            let notes = (dict["notes"]?.stringValue) ?? ""
             let orderTotal = (dict["total"]?.floatValue) ?? 0.0
             let orderPendingAmount = (orderTotal - ((dict["transaction_sum"]?.floatValue) ?? 0.0))
             
-            let parsedOrder = Order.init(id:orderId, number:orderNumber, status: Order.orderStatus(rawValue: computedStatus)!, itemCount: itemCount, amount: orderTotal, amountPending: orderPendingAmount,note:notes)
+            let parsedOrder = Order.init(id:orderId, number:orderNumber, status: Order.orderStatus(rawValue: computedStatus)!, itemCount: itemCount, amount: orderTotal, amountPending: orderPendingAmount)
             self.selectedCustomer.orders.append(parsedOrder)
         }
         
@@ -113,12 +124,14 @@ class CustomerViewController: BaseViewController,UITableViewDelegate,UITableView
             case 1:
                 self.arrOpenOrderList.append(each)
             case 2:self.arrCompletedOrderList.append(each)
-            case 3:self.arrCancelledOrderList.append(each)
+//            case 3:
             default:
                 print("a")
             }
         }
         self.tblViewOrders.reloadData()
+        self.tblViewOrders.layoutIfNeeded()
+        self.tableHeight.constant = self.tblViewOrders.contentSize.height
     }
     
     private func setLabelUI() {
@@ -180,6 +193,8 @@ class CustomerViewController: BaseViewController,UITableViewDelegate,UITableView
             self.buttonBar.frame.origin.x = (self.segmentedControl.frame.width / CGFloat(self.segmentedControl.numberOfSegments)) * CGFloat(self.segmentedControl.selectedSegmentIndex)
         }
         self.tblViewOrders.reloadData()
+        self.tblViewOrders.layoutIfNeeded()
+        self.tableHeight.constant = self.tblViewOrders.contentSize.height
     }
     
     // MARK: - UITableView Delegate & Datasource Methods
@@ -195,7 +210,7 @@ class CustomerViewController: BaseViewController,UITableViewDelegate,UITableView
             return self.arrCompletedOrderList.count
         }
         else{
-            return self.arrCancelledOrderList.count
+            return self.arrCredits.count
         }
     }
     
@@ -215,7 +230,10 @@ class CustomerViewController: BaseViewController,UITableViewDelegate,UITableView
             cell.configure(selectedSegment: self.segmentedControl.selectedSegmentIndex, order: self.arrCompletedOrderList[indexPath.row])
         }
         else {
-            cell.configure(selectedSegment: self.segmentedControl.selectedSegmentIndex, order: self.arrCancelledOrderList[indexPath.row])
+            let cell:OrderTableViewCell = tblViewOrders.dequeueReusableCell(withIdentifier: Constants.TableViewCellIdentifier.creditTableViewCellIdentifier, for: indexPath) as! OrderTableViewCell
+            cell.selectionStyle = .none
+            cell.configure(credit: self.arrCredits[indexPath.row])
+            return cell
         }
         
         return cell
@@ -225,16 +243,18 @@ class CustomerViewController: BaseViewController,UITableViewDelegate,UITableView
         let sb = UIStoryboard(name: Constants.StoryBoard.homeSB, bundle: nil)
         if let vc = sb.instantiateViewController(withIdentifier: Constants.ViewControllerIdentifier.orderDetailsViewController) as? OrderDetailsViewController {
             if self.segmentedControl.selectedSegmentIndex == 0 {
-                let selectedOrder = Order.init(value:self.arrOpenOrderList[indexPath.row])
-                vc.selectedOrder = selectedOrder
+                if (indexPath.row < self.arrOpenOrderList.count) {
+                    let selectedOrder = Order.init(value:self.arrOpenOrderList[indexPath.row])
+                    vc.selectedOrder = selectedOrder
+                    vc.arrCredits = arrCredits
+                }
             }
             else if self.segmentedControl.selectedSegmentIndex == 1 {
                 let selectedOrder = Order.init(value:self.arrCompletedOrderList[indexPath.row])
                 vc.selectedOrder = selectedOrder
             }
             else {
-                let selectedOrder = Order.init(value:self.arrCancelledOrderList[indexPath.row])
-                vc.selectedOrder = selectedOrder
+                return
             }
             vc.companyName = self.selectedCustomer.companyName
             self.navigationController?.pushViewController(vc, animated: true)
