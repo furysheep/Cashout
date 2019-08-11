@@ -88,6 +88,7 @@ class OrderDetailsViewController: BaseViewController,UITableViewDelegate,UITable
                     let transCheckNo = (dict1["check_number"]?.stringValue) ?? ""
                     let transAmount = (dict1["price"]?.floatValue) ?? 0.00
                     var transDate = (dict1["created_at"]?.stringValue) ?? ""
+                    let stornoDoc = dict1["storno_doc"]?.stringValue ?? ""
                     let notes = (dict1["notes"]?.stringValue) ?? ""
                     if !transDate.isEmpty {
                         let commaSeperated = transDate.components(separatedBy:" ")
@@ -95,7 +96,7 @@ class OrderDetailsViewController: BaseViewController,UITableViewDelegate,UITable
                     }
                     let kind = (dict1["kind"]?.stringValue) ?? ""
                     
-                    let parsedTransaction = Transaction.init(transactionId: transId, number: transNo, transactionDate: transDate, price: transAmount, transactionType: Constants.getTransactionType(type: transType),chequeNo: transCheckNo,bank: transBank, kind: kind, notes: notes)
+                    let parsedTransaction = Transaction.init(transactionId: transId, number: transNo, transactionDate: transDate, price: transAmount, transactionType: Constants.getTransactionType(type: transType),chequeNo: transCheckNo,bank: transBank, kind: kind, notes: notes, stornoDoc: stornoDoc)
                     self.selectedOrder.Transactions.append(parsedTransaction)
                 }
             }

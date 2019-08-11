@@ -62,7 +62,11 @@ class PrintViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         self.lblOrder.text = String(format: "%@%@", "Order #".localized(),self.selectedOrder.number)
         self.lblTransaction.text = String.init(format: "%@%@", "Transaction #".localized(),self.selectedTrans.number)
         self.lblRecipient.text = String.init(format: "%@\n%@\n%@", "Recipient:".localized(), SharedClass.shared.currentSelectedCustomer.companyName, SharedClass.shared.currentSelectedCustomer.address)
-        self.lblThisTransaction.text = "This transaction:".localized() + "\n\(self.selectedTrans.price) €  (\(self.selectedTrans.kind.capitalized.localized()))"
+        if (self.selectedTrans.kind == "storno") {
+            self.lblThisTransaction.text = "This transaction:".localized() + "\n\(self.selectedTrans.price) €  \n(\(self.selectedTrans.kind.capitalized.localized()): \(self.selectedTrans.stornoDoc))"
+        } else {
+            self.lblThisTransaction.text = "This transaction:".localized() + "\n\(self.selectedTrans.price) €  (\(self.selectedTrans.kind.capitalized.localized()))"
+        }
         self.lblPaymentMethod.text = String.init(format: "%@\n%@", "Payment method:".localized(),self.selectedTrans.transactionType)
         self.lblBank.text = String.init(format: "%@: %@", "Bank".localized(), self.selectedTrans.bank.localized())
         self.lblComments.text = String.init(format: "%@\n%@", "Comments/Notes".localized(),self.selectedTrans.notes.trimSpace() == "" ? "no note".localized() : self.selectedTrans.notes)

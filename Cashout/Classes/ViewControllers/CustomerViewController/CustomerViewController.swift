@@ -69,7 +69,7 @@ class CustomerViewController: BaseViewController,UITableViewDelegate,UITableView
             if success {
                 if let credits = result {
                     for each in credits {
-                        self.arrCredits.append(Credit(storno_id: each["storno_id"].int64Value, n_doc: each["n_doc"].stringValue, name_doc: each["name_doc"].stringValue, date_doc: each["date_doc"].stringValue, date_doc_ita: each["date_doc_ita"].stringValue, avere: each["avere"].floatValue))
+                        self.arrCredits.append(Credit(id: each["id"].int64Value, n_doc: each["n_doc"].stringValue, name_doc: each["name_doc"].stringValue, date_doc: each["date_doc"].stringValue, date_doc_ita: each["date_doc_ita"].stringValue, avere: each["avere"].floatValue))
 //                        let dict = each.dictionaryValue
                     }
                 }

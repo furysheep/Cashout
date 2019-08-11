@@ -15,8 +15,9 @@ class Transaction: Object {
     @objc private(set) dynamic var price:Float = 0.00
     @objc private(set) dynamic var kind = ""
     @objc private(set) dynamic var notes = ""
+    @objc private(set) dynamic var stornoDoc = ""
     
-    convenience init(transactionId : String, number : String, transactionDate : String, price : Float, transactionType:String,chequeNo:String,bank:String, kind: String, notes: String) {
+    convenience init(transactionId : String, number : String, transactionDate : String, price : Float, transactionType:String,chequeNo:String,bank:String, kind: String, notes: String, stornoDoc: String) {
         self.init()
         self.transactionId = transactionId
         self.number = number
@@ -27,6 +28,7 @@ class Transaction: Object {
         self.bank = bank
         self.kind = kind
         self.notes = notes
+        self.stornoDoc = stornoDoc
     }
     
 }

@@ -182,7 +182,7 @@ class TransactionViewController: BaseViewController, UITextFieldDelegate, Credit
     func redirectToTransactionReceipt(transactionResponse:Original) {
         let sb = UIStoryboard(name: Constants.StoryBoard.homeSB, bundle: nil)
         if let vc = sb.instantiateViewController(withIdentifier: Constants.ViewControllerIdentifier.orderStatusViewController) as? OrderStatusViewController {
-            let currentTransaction = Transaction.init(transactionId: transactionResponse.id!, number: transactionResponse.number!, transactionDate: transactionResponse.createdAt!, price: Float(transactionResponse.price!), transactionType: transactionResponse.payment!, chequeNo: transactionResponse.checkNumber ?? "", bank: transactionResponse.bank ?? "", kind: transactionResponse.kind ?? "", notes: transactionResponse.notes ?? "")
+            let currentTransaction = Transaction.init(transactionId: transactionResponse.id!, number: transactionResponse.number!, transactionDate: transactionResponse.createdAt!, price: Float(transactionResponse.price!), transactionType: transactionResponse.payment!, chequeNo: transactionResponse.checkNumber ?? "", bank: transactionResponse.bank ?? "", kind: transactionResponse.kind ?? "", notes: transactionResponse.notes ?? "", stornoDoc: transactionResponse.stornoDoc ?? "")
             vc.selectedTrans = currentTransaction
             vc.selectedOrder = selectedOrder
             vc.currentUIState = .transactionCompleted

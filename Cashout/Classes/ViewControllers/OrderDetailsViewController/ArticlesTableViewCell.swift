@@ -34,7 +34,7 @@ class ArticlesTableViewCell: UITableViewCell {
     func configureTransaction(trans:Transaction) {
         self.imgViewIcon?.image = #imageLiteral(resourceName: "orderOpen")
         self.imgViewIcon = SharedClass.shared.setImageViewTintColor(img: self.imgViewIcon.image!, tintColor: #colorLiteral(red: 0, green: 0.5490196078, blue: 0.2549019608, alpha: 1), imgView: self.imgViewIcon)
-        self.lblArticleName.text = "Transaction #"+trans.number
+        self.lblArticleName.text = "Transaction #".localized() + trans.number
         if trans.transactionType.localized() == "Check".localized() {
             self.lblArticleDescription.text = trans.transactionDate+" - "+trans.transactionType+" "+trans.bank+" #"+trans.chequeNo
         }

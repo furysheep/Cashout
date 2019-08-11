@@ -196,7 +196,7 @@ class APIManager {
         //        }
         var params = ["order_id":orderId,"kind":kind,"payment":payment,"bank":bank,"check_number":checkNumber,"price":price, "notes": notes] as [String: Any]
         if let credit = credit {
-            params["storno_id"] = credit.storno_id
+            params["credit_id"] = credit.id
             params["n_doc"] = credit.n_doc
             params["date_doc"] = credit.date_doc
             params["name_doc"] = credit.name_doc
