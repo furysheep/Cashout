@@ -105,7 +105,7 @@
 "fF0-l5-MAZ.text" = "Etichetta";
 
 /* Class = "UILabel"; text = "Check Number"; ObjectID = "ftf-Yq-qAS"; */
-"ftf-Yq-qAS.text" = "Numero Assegno";
+"ftf-Yq-qAS.text" = "Numero";
 
 /* Class = "UIButton"; normalTitle = "REGISTER TRANSACTION"; ObjectID = "gO7-oF-mUz"; */
 "gO7-oF-mUz.normalTitle" = "REGISTRA TRANSAZIONE";
